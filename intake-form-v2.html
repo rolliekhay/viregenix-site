@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Diagnostic Intake Form — Viregenix LLC</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Mono:wght@300;400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:    #0c0c0c;
+  --paper:  #f7f4ee;
+  --warm:   #ede8dc;
+  --gold:   #b8962e;
+  --goldlt: #d4ae4a;
+  --forest: #182820;
+  --stone:  #6a6055;
+  --rule:   #ddd7c8;
+  --white:  #fdfcf9;
+  --red:    #8b3a3a;
+  --redbg:  #fdf0f0;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+body::after {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── NAV ── */
+nav {
+  background: var(--forest);
+  padding: 1.1rem 3rem;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+.nav-brand {
+  font-family: 'DM Mono', monospace; font-size: 0.62rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(253,252,249,0.5);
+}
+.nav-title {
+  font-family: 'DM Mono', monospace; font-size: 0.62rem;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--goldlt);
+}
+@media (max-width: 600px) { nav { padding: 1rem 1.4rem; } }
+
+/* ── PROGRESS ── */
+.progress-wrap {
+  background: var(--forest);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding: 1rem 3rem;
+}
+@media (max-width: 600px) { .progress-wrap { padding: 1rem 1.4rem; } }
+.progress-inner { max-width: 860px; margin: 0 auto; }
+.progress-steps { display: flex; }
+.ps {
+  flex: 1; text-align: center;
+  font-family: 'DM Mono', monospace; font-size: 0.5rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(253,252,249,0.28);
+  padding: 0.35rem 0.2rem;
+  border-bottom: 2px solid rgba(255,255,255,0.08);
+  transition: all 0.3s;
+}
+.ps.active { color: var(--goldlt); border-bottom-color: var(--gold); }
+.ps.done   { color: rgba(253,252,249,0.45); border-bottom-color: rgba(184,150,46,0.35); }
+.progress-bar-track {
+  height: 2px; background: rgba(255,255,255,0.07);
+  margin-top: 0.7rem; border-radius: 1px;
+}
+.progress-bar-fill {
+  height: 100%; background: var(--gold);
+  border-radius: 1px; transition: width 0.5s ease; width: 0%;
+}
+
+/* ── LAYOUT ── */
+.form-wrap { max-width: 860px; margin: 0 auto; padding: 3rem 3rem 6rem; }
+@media (max-width: 600px) { .form-wrap { padding: 2rem 1.4rem 5rem; } }
+
+/* ── SECTIONS ── */
+.form-section { display: none; animation: fadeUp 0.45s ease both; }
+.form-section.active { display: block; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── SECTION HEADER ── */
+.section-header {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+.section-part {
+  font-family: 'DM Mono', monospace; font-size: 0.6rem;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.8rem;
+  display: flex; align-items: center; gap: 0.7rem;
+}
+.section-part::before {
+  content: ''; display: block;
+  width: 22px; height: 1px; background: var(--gold);
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 300; line-height: 1.12; margin-bottom: 0.7rem;
+}
+.section-desc {
+  color: var(--stone); font-size: 0.95rem; line-height: 1.75; max-width: 560px;
+}
+
+/* ── FIELD PRIMITIVES ── */
+.field-group { margin-bottom: 1.8rem; }
+.field-row   { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 1.8rem; }
+@media (max-width: 580px) { .field-row { grid-template-columns: 1fr; } }
+
+/* Short labels — DM Mono uppercase — CORRECT usage */
+.field-label {
+  display: block;
+  font-family: 'DM Mono', monospace; font-size: 0.58rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--stone); margin-bottom: 0.5rem;
+}
+.field-label .req { color: var(--gold); margin-left: 0.2rem; }
+
+/* Question text — Cormorant italic sentence case — CORRECT usage */
+.q-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem; font-style: italic;
+  font-weight: 400; color: var(--ink);
+  line-height: 1.55; margin-bottom: 0.9rem;
+  display: block;
+}
+
+/* Question label (number + topic) stays DM Mono small */
+.q-label {
+  font-family: 'DM Mono', monospace; font-size: 0.58rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.5rem; display: block;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  background: var(--white); border: 1px solid var(--rule);
+  color: var(--ink);
+  font-family: 'Jost', sans-serif; font-size: 0.95rem; font-weight: 300;
+  padding: 0.85rem 1rem; outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  appearance: none;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(184,150,46,0.1);
+}
+textarea { resize: vertical; min-height: 100px; }
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236a6055' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 1rem center;
+  padding-right: 2.5rem; cursor: pointer;
+}
+.field-hint {
+  font-family: 'DM Mono', monospace; font-size: 0.54rem;
+  letter-spacing: 0.08em; color: var(--stone); opacity: 0.7; margin-top: 0.4rem;
+}
+
+/* ── RADIO & CHECKBOX ── */
+.radio-group, .check-group {
+  display: flex; flex-direction: column; gap: 0.55rem; margin-top: 0.3rem;
+}
+.radio-group.horizontal, .check-group.horizontal {
+  flex-direction: row; flex-wrap: wrap;
+}
+
+.radio-opt, .check-opt {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  cursor: pointer; padding: 0.75rem 1rem;
+  border: 1px solid var(--rule); background: var(--white);
+  transition: border-color 0.2s, background 0.2s;
+  /* Option text in Jost regular — readable sentence case */
+  font-family: 'Jost', sans-serif; font-size: 0.93rem;
+  font-weight: 300; color: var(--stone); line-height: 1.4;
+}
+.radio-opt:hover, .check-opt:hover { border-color: var(--gold); background: var(--warm); }
+.radio-opt input, .check-opt input { display: none; }
+
+.radio-opt .dot, .check-opt .box {
+  width: 16px; height: 16px; min-width: 16px;
+  border: 1px solid var(--rule); margin-top: 0.1em;
+  transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+}
+.radio-opt .dot { border-radius: 50%; }
+.radio-opt.selected { border-color: var(--gold); background: var(--warm); color: var(--ink); }
+.radio-opt.selected .dot { border-color: var(--gold); background: var(--gold); box-shadow: inset 0 0 0 3px var(--warm); }
+.check-opt.selected { border-color: var(--gold); background: var(--warm); color: var(--ink); }
+.check-opt.selected .box { border-color: var(--gold); background: var(--gold); }
+.check-opt.selected .box::after { content: '✓'; color: var(--white); font-size: 0.68rem; line-height: 1; }
+
+.radio-open { display: none; margin-top: 0.5rem; width: 100%; }
+.radio-opt.selected .radio-open { display: block; }
+
+/* ── INFO / WARN BOXES ── */
+.info-box {
+  background: var(--forest); color: var(--white);
+  padding: 1.4rem 1.8rem; margin-bottom: 1.8rem;
+  border-left: 3px solid var(--gold);
+}
+.info-box p { font-size: 0.92rem; line-height: 1.78; opacity: 0.82; }
+.info-box strong { color: var(--goldlt); font-weight: 500; }
+
+.warn-box {
+  background: var(--redbg); border-left: 3px solid var(--red);
+  padding: 1.2rem 1.5rem; margin-bottom: 1.5rem;
+}
+.warn-box p { font-size: 0.88rem; color: var(--red); line-height: 1.65; }
+
+/* ── PROPERTY TABS ── */
+.property-tabs {
+  display: flex; flex-wrap: wrap;
+  border-bottom: 2px solid var(--rule); margin-bottom: 0;
+}
+.ptab {
+  font-family: 'DM Mono', monospace; font-size: 0.56rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0.65rem 1.1rem; cursor: pointer;
+  color: var(--stone); border-bottom: 2px solid transparent;
+  margin-bottom: -2px; transition: all 0.2s; white-space: nowrap;
+}
+.ptab:hover { color: var(--gold); }
+.ptab.active { color: var(--forest); border-bottom-color: var(--forest); font-weight: 500; }
+.ptab.filled { color: var(--gold); }
+.ptab.filled.active { color: var(--forest); }
+
+.property-panel {
+  display: none;
+  border: 1px solid var(--rule); border-top: none;
+  padding: 2rem; background: var(--white);
+}
+.property-panel.active { display: block; animation: fadeUp 0.3s ease both; }
+
+.prop-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--rule);
+}
+.prop-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem; font-weight: 400; color: var(--forest);
+}
+.prop-status {
+  font-family: 'DM Mono', monospace; font-size: 0.54rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--stone);
+}
+.prop-status.filled { color: var(--gold); }
+
+.prop-type-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.55rem;
+}
+.ptype {
+  border: 1px solid var(--rule); padding: 0.65rem 0.8rem;
+  cursor: pointer; font-size: 0.84rem; color: var(--stone);
+  text-align: center; transition: all 0.2s; background: var(--paper);
+}
+.ptype:hover { border-color: var(--gold); background: var(--warm); }
+.ptype.selected { border-color: var(--forest); background: var(--forest); color: var(--white); }
+
+.debt-toggle { display: flex; gap: 0.55rem; }
+.dtog {
+  flex: 1; padding: 0.72rem; text-align: center;
+  border: 1px solid var(--rule); cursor: pointer;
+  font-family: 'DM Mono', monospace; font-size: 0.58rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--stone); transition: all 0.2s;
+}
+.dtog:hover { border-color: var(--gold); }
+.dtog.selected { background: var(--forest); color: var(--white); border-color: var(--forest); }
+
+.occupancy-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.55rem; }
+.occopt {
+  padding: 0.72rem; text-align: center;
+  border: 1px solid var(--rule); cursor: pointer;
+  font-size: 0.84rem; color: var(--stone); transition: all 0.2s;
+}
+.occopt:hover { border-color: var(--gold); }
+.occopt.selected.full    { background: #e8f5e9; border-color: #4caf50; color: #2e7d32; }
+.occopt.selected.partial { background: #fff8e1; border-color: #ff9800; color: #e65100; }
+.occopt.selected.vacant  { background: var(--redbg); border-color: var(--red); color: var(--red); }
+
+/* ── RATING SLIDER ── */
+.rating-display {
+  text-align: center; margin-bottom: 0.6rem;
+}
+.rating-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem; font-weight: 400; color: var(--forest); line-height: 1;
+}
+.rating-desc-text {
+  font-family: 'DM Mono', monospace; font-size: 0.58rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--stone);
+  margin-top: 0.3rem;
+}
+input[type="range"] {
+  width: 100%; appearance: none; background: transparent;
+  cursor: pointer; height: 4px;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px; background: var(--rule); border-radius: 2px;
+}
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--forest); border: 2px solid var(--gold);
+  cursor: grab; margin-top: -8px;
+}
+input[type="range"]::-moz-range-track {
+  height: 4px; background: var(--rule); border-radius: 2px;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--forest); border: 2px solid var(--gold); cursor: grab;
+}
+.rating-labels {
+  display: flex; justify-content: space-between;
+  font-family: 'DM Mono', monospace; font-size: 0.5rem;
+  letter-spacing: 0.08em; color: var(--stone); margin-top: 0.5rem;
+}
+
+/* ── DIVIDER ── */
+.divider { height: 1px; background: var(--rule); margin: 2.2rem 0; }
+
+/* ── UPLOAD ── */
+.upload-zone {
+  border: 2px dashed var(--rule); padding: 2rem;
+  text-align: center; cursor: pointer;
+  transition: all 0.2s; background: var(--white);
+}
+.upload-zone:hover { border-color: var(--gold); background: var(--warm); }
+.upload-zone.has-file { border-color: var(--gold); background: var(--warm); }
+.upload-icon { font-size: 1.4rem; margin-bottom: 0.4rem; }
+.upload-label {
+  font-family: 'DM Mono', monospace; font-size: 0.58rem;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--stone);
+}
+.upload-sub { font-size: 0.82rem; color: var(--stone); opacity: 0.65; margin-top: 0.4rem; }
+
+/* ── NAV BUTTONS ── */
+.form-nav {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--rule);
+}
+.btn-back {
+  font-family: 'DM Mono', monospace; font-size: 0.63rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--stone); background: transparent;
+  border: 1px solid var(--rule); padding: 0.9rem 1.7rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-back:hover { border-color: var(--stone); color: var(--ink); }
+.btn-next {
+  font-family: 'DM Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--white); background: var(--forest);
+  border: none; padding: 1rem 2.4rem; cursor: pointer; transition: all 0.2s;
+}
+.btn-next:hover { background: var(--gold); color: var(--ink); }
+.btn-submit {
+  font-family: 'DM Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ink); background: var(--gold);
+  border: none; padding: 1rem 2.4rem; cursor: pointer; transition: all 0.2s;
+}
+.btn-submit:hover { background: var(--goldlt); }
+.step-counter {
+  font-family: 'DM Mono', monospace; font-size: 0.56rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--stone);
+}
+
+/* ── SUCCESS ── */
+.success-screen { display: none; text-align: center; padding: 5rem 2rem; }
+.success-screen.active { display: block; animation: fadeUp 0.6s ease both; }
+.success-icon { font-size: 2.8rem; margin-bottom: 1.4rem; }
+.success-screen h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem; font-weight: 300; margin-bottom: 1rem; color: var(--forest);
+}
+.success-screen p { color: var(--stone); max-width: 480px; margin: 0 auto 0.8rem; line-height: 1.8; }
+
+/* ── FOOTER ── */
+footer { background: var(--forest); padding: 2rem 3rem; text-align: center; }
+.fi { max-width: 860px; margin: 0 auto; }
+.fb {
+  font-family: 'DM Mono', monospace; font-size: 0.54rem;
+  letter-spacing: 0.13em; text-transform: uppercase;
+  color: rgba(253,252,249,0.32); margin-bottom: 0.6rem;
+}
+.fc {
+  font-family: 'DM Mono', monospace; font-size: 0.5rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: rgba(253,252,249,0.18);
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Viregenix LLC · Rollie Khay</div>
+  <div class="nav-title">Portfolio Diagnostic Intake Form</div>
+</nav>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <div class="progress-steps">
+      <div class="ps active" data-step="0">A · About You</div>
+      <div class="ps" data-step="1">B · Overview</div>
+      <div class="ps" data-step="2">C · Properties</div>
+      <div class="ps" data-step="3">D · Behaviour</div>
+      <div class="ps" data-step="4">E · Risk</div>
+      <div class="ps" data-step="5">Review</div>
+    </div>
+    <div class="progress-bar-track">
+      <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
+  </div>
+</div>
+
+<div class="form-wrap">
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SECTION A — ABOUT YOU                             -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="form-section active" id="section-0">
+  <div class="section-header">
+    <div class="section-part">Part A</div>
+    <h2 class="section-title">About You</h2>
+    <p class="section-desc">This helps me calibrate how I present your diagnosis during the call. All information is kept strictly confidential under the Viregenix LLC Privacy Policy.</p>
+  </div>
+
+  <div class="field-row">
+    <div class="field-group">
+      <label class="field-label">Full Name <span class="req">*</span></label>
+      <input type="text" id="fullName" placeholder="Your full name">
+    </div>
+    <div class="field-group">
+      <label class="field-label">Email Address <span class="req">*</span></label>
+      <input type="email" id="email" placeholder="you@example.com">
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label">Profession <span class="req">*</span></label>
+    <div class="radio-group">
+      <label class="radio-opt" onclick="selectRadio(this,'profession','physician')">
+        <input type="radio" name="profession" value="physician">
+        <div class="dot"></div>Physician / Healthcare Professional
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'profession','engineer')">
+        <input type="radio" name="profession" value="engineer">
+        <div class="dot"></div>Engineer
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'profession','attorney')">
+        <input type="radio" name="profession" value="attorney">
+        <div class="dot"></div>Attorney / Legal Professional
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'profession','business')">
+        <input type="radio" name="profession" value="business">
+        <div class="dot"></div>Business Owner / Entrepreneur
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'profession','finance')">
+        <input type="radio" name="profession" value="finance">
+        <div class="dot"></div>Finance Professional
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'profession','other')">
+        <input type="radio" name="profession" value="other">
+        <div class="dot"></div>Other
+        <input type="text" class="radio-open" placeholder="Please specify">
+      </label>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="field-group">
+    <label class="field-label">Primary investment goal <span class="req">*</span></label>
+    <div class="radio-group">
+      <label class="radio-opt" onclick="selectRadio(this,'goal','cashflow')">
+        <input type="radio" name="goal" value="cashflow"><div class="dot"></div>Maximum cash flow now
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'goal','appreciation')">
+        <input type="radio" name="goal" value="appreciation"><div class="dot"></div>Long-term appreciation
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'goal','tax')">
+        <input type="radio" name="goal" value="tax"><div class="dot"></div>Tax efficiency and wealth preservation
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'goal','generational')">
+        <input type="radio" name="goal" value="generational"><div class="dot"></div>Building generational wealth
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'goal','balance')">
+        <input type="radio" name="goal" value="balance"><div class="dot"></div>Balance of all of the above
+      </label>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label">Years investing in real estate <span class="req">*</span></label>
+    <div class="radio-group horizontal">
+      <label class="radio-opt" onclick="selectRadio(this,'experience','lt2')">
+        <input type="radio" name="experience" value="lt2"><div class="dot"></div>Less than 2 years
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'experience','2to5')">
+        <input type="radio" name="experience" value="2to5"><div class="dot"></div>2–5 years
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'experience','5to10')">
+        <input type="radio" name="experience" value="5to10"><div class="dot"></div>5–10 years
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'experience','gt10')">
+        <input type="radio" name="experience" value="gt10"><div class="dot"></div>More than 10 years
+      </label>
+    </div>
+  </div>
+
+  <div class="form-nav">
+    <div class="step-counter">Step 1 of 5</div>
+    <button class="btn-next" onclick="nextSection(0)">Continue → Part B</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SECTION B — PORTFOLIO OVERVIEW                    -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="form-section" id="section-1">
+  <div class="section-header">
+    <div class="section-part">Part B</div>
+    <h2 class="section-title">Portfolio Overview</h2>
+    <p class="section-desc">High-level numbers across your entire portfolio. Approximate figures to the nearest $1,000 are sufficient. These numbers allow the portfolio-level IRR, leverage ratio, and debt risk to be calculated before the call.</p>
+  </div>
+
+  <div class="info-box">
+    <p><strong>Why this matters:</strong> These numbers allow calculation of your portfolio-level NOI, leverage ratio, and debt maturity risk before we meet — so the call opens with a diagnosis, not a data collection exercise.</p>
+  </div>
+
+  <div class="field-row">
+    <div class="field-group">
+      <label class="field-label">Number of properties owned <span class="req">*</span></label>
+      <input type="number" id="propCount" placeholder="e.g. 6" min="1" max="50">
+    </div>
+    <div class="field-group">
+      <label class="field-label">Total current market value <span class="req">*</span></label>
+      <input type="text" id="totalValue" placeholder="e.g. $3,200,000">
+      <div class="field-hint">Approximate combined value across all properties</div>
+    </div>
+  </div>
+
+  <div class="field-row">
+    <div class="field-group">
+      <label class="field-label">Total annual gross rental income <span class="req">*</span></label>
+      <input type="text" id="grossIncome" placeholder="e.g. $180,000">
+      <div class="field-hint">Total rent collected per year across all properties</div>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Total annual operating expenses <span class="req">*</span></label>
+      <input type="text" id="opExpenses" placeholder="e.g. $72,000">
+      <div class="field-hint">Taxes, insurance, maintenance, management fees — exclude mortgage payments</div>
+    </div>
+  </div>
+
+  <div class="field-row">
+    <div class="field-group">
+      <label class="field-label">Total outstanding mortgage balance <span class="req">*</span></label>
+      <input type="text" id="totalDebt" placeholder="e.g. $1,800,000">
+      <div class="field-hint">Combined across all properties</div>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Total annual mortgage payments</label>
+      <input type="text" id="totalMortgage" placeholder="e.g. $108,000">
+      <div class="field-hint">Principal and interest combined across all properties</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="field-group">
+    <label class="field-label">Fixed vs variable rate split <span class="req">*</span></label>
+    <div class="field-row">
+      <div>
+        <label class="field-label">Fixed rate (%)</label>
+        <input type="number" id="fixedPct" placeholder="e.g. 70" min="0" max="100">
+      </div>
+      <div>
+        <label class="field-label">Variable rate (%)</label>
+        <input type="number" id="varPct" placeholder="e.g. 30" min="0" max="100">
+      </div>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label">Mortgages maturing in the next 24 months <span class="req">*</span></label>
+    <div class="radio-group">
+      <label class="radio-opt" onclick="selectRadio(this,'maturity','yes')">
+        <input type="radio" name="maturity" value="yes"><div class="dot"></div>Yes
+        <input type="text" class="radio-open" placeholder="Approximate balance and maturity date — e.g. $340,000 maturing Q3 2027">
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'maturity','no')">
+        <input type="radio" name="maturity" value="no"><div class="dot"></div>No — all debt is stable beyond 24 months
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'maturity','unsure')">
+        <input type="radio" name="maturity" value="unsure"><div class="dot"></div>I am not sure of the exact dates
+      </label>
+    </div>
+  </div>
+
+  <div class="form-nav">
+    <button class="btn-back" onclick="prevSection(1)">← Back</button>
+    <div class="step-counter">Step 2 of 5</div>
+    <button class="btn-next" onclick="nextSection(1)">Continue → Part C</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SECTION C — PER PROPERTY DATA                     -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="form-section" id="section-2">
+  <div class="section-header">
+    <div class="section-part">Part C — Most Important Section</div>
+    <h2 class="section-title">Your Properties</h2>
+    <p class="section-desc">Complete one entry per property. If you own more than 8, start with your highest value properties first. Leave unused tabs blank. Approximate figures to the nearest $500 are sufficient.</p>
+  </div>
+
+  <div class="info-box">
+    <p><strong>This section is what makes your diagnostic truly personalized.</strong> The per-property data allows the correlation matrix to be built, individual property IRRs to be calculated, and the Monte Carlo simulation to be run with your real numbers — not estimates.</p>
+  </div>
+
+  <div class="property-tabs" id="propTabs"></div>
+  <div id="propPanels"></div>
+
+  <div class="divider"></div>
+
+  <div class="field-group">
+    <label class="field-label">Additional properties beyond 8</label>
+    <textarea id="extraProps" placeholder="For each property list: City, State · Property type · Approximate value&#10;Example: Nashville, TN · Single family · $420,000"></textarea>
+    <div class="field-hint">This gives enough context to factor them into the overall portfolio diagnosis</div>
+  </div>
+
+  <div class="form-nav">
+    <button class="btn-back" onclick="prevSection(2)">← Back</button>
+    <div class="step-counter">Step 3 of 5</div>
+    <button class="btn-next" onclick="nextSection(2)">Continue → Part D</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SECTION D — BEHAVIOUR                             -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="form-section" id="section-3">
+  <div class="section-header">
+    <div class="section-part">Part D</div>
+    <h2 class="section-title">Behaviour &amp; Decision Making</h2>
+    <p class="section-desc">These questions reveal how your portfolio was built and where decision-making patterns may be creating invisible risk. There are no right or wrong answers. Honest answers produce a more accurate diagnosis.</p>
+  </div>
+
+  <!-- Q: Market selection -->
+  <div class="field-group">
+    <span class="q-label">Market selection</span>
+    <span class="q-text">"How did you decide which markets to invest in?"</span>
+    <div class="radio-group">
+      <label class="radio-opt" onclick="selectRadio(this,'marketDecision','data')">
+        <input type="radio" name="marketDecision" value="data"><div class="dot"></div>Quantitative data and market research
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'marketDecision','opportunity')">
+        <input type="radio" name="marketDecision" value="opportunity"><div class="dot"></div>Opportunity — the deal came to me
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'marketDecision','proximity')">
+        <input type="radio" name="marketDecision" value="proximity"><div class="dot"></div>Proximity — markets I know personally
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'marketDecision','broker')">
+        <input type="radio" name="marketDecision" value="broker"><div class="dot"></div>Broker or advisor recommendation
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'marketDecision','combo')">
+        <input type="radio" name="marketDecision" value="combo"><div class="dot"></div>A combination of the above
+      </label>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Q: Evaluation metrics -->
+  <div class="field-group">
+    <span class="q-label">Evaluation metrics — select all that apply</span>
+    <span class="q-text">"When you evaluate a new property to add to your portfolio, what metrics do you actually use to make the decision?"</span>
+    <div class="check-group">
+      <label class="check-opt" onclick="toggleCheck(this)">
+        <input type="checkbox" value="caprate"><div class="box"></div>Cap rate
+      </label>
+      <label class="check-opt" onclick="toggleCheck(this)">
+        <input type="checkbox" value="cashoncash"><div class="box"></div>Cash on cash return
+      </label>
+      <label class="check-opt" onclick="toggleCheck(this)">
+        <input type="checkbox" value="irr"><div class="box"></div>IRR projection
+      </label>
+      <label class="check-opt" onclick="toggleCheck(this)">
+        <input type="checkbox" value="portfoliorisk"><div class="box"></div>How it affects my overall portfolio risk
+      </label>
+      <label class="check-opt" onclick="toggleCheck(this)">
+        <input type="checkbox" value="gut"><div class="box"></div>Gut feeling and market knowledge
+      </label>
+      <label class="check-opt" onclick="toggleCheck(this)">
+        <input type="checkbox" value="brokerrec"><div class="box"></div>Broker or advisor recommendation
+      </label>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Q: Stress testing -->
+  <div class="field-group">
+    <span class="q-label">Stress testing</span>
+    <span class="q-text">"Have you ever stress tested your portfolio against a recession scenario with rising vacancy and higher interest rates?"</span>
+    <div class="radio-group">
+      <label class="radio-opt" onclick="selectRadio(this,'stressTest','yes')">
+        <input type="radio" name="stressTest" value="yes"><div class="dot"></div>Yes — with actual numbers and projections
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'stressTest','loosely')">
+        <input type="radio" name="stressTest" value="loosely"><div class="dot"></div>I have thought about it loosely but not formally
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'stressTest','no')">
+        <input type="radio" name="stressTest" value="no"><div class="dot"></div>No — I have not done this
+      </label>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Q: Downturn impact -->
+  <div class="field-group">
+    <span class="q-label">Downturn exposure</span>
+    <span class="q-text">"If one of your key markets experienced a significant economic downturn, how many of your properties would be directly affected?"</span>
+    <div class="radio-group horizontal">
+      <label class="radio-opt" onclick="selectRadio(this,'downturnImpact','1to2')">
+        <input type="radio" name="downturnImpact" value="1to2"><div class="dot"></div>1–2 properties only
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'downturnImpact','half')">
+        <input type="radio" name="downturnImpact" value="half"><div class="dot"></div>About half my portfolio
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'downturnImpact','most')">
+        <input type="radio" name="downturnImpact" value="most"><div class="dot"></div>Most or all of my portfolio
+      </label>
+    </div>
+  </div>
+
+  <div class="form-nav">
+    <button class="btn-back" onclick="prevSection(3)">← Back</button>
+    <div class="step-counter">Step 4 of 5</div>
+    <button class="btn-next" onclick="nextSection(3)">Continue → Part E</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SECTION E — RISK & AWARENESS (12 Questions)       -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="form-section" id="section-4">
+  <div class="section-header">
+    <div class="section-part">Part E</div>
+    <h2 class="section-title">Risk &amp; Awareness</h2>
+    <p class="section-desc">These are the 12 core diagnostic questions. Your answers — combined with the property data from Part C — are what Rollie Khay spends 1–2 days analyzing before the call. Be as honest and specific as possible.</p>
+  </div>
+
+  <!-- Q01 -->
+  <div class="field-group">
+    <span class="q-label">Question 01 · Portfolio-level IRR <span style="color:var(--gold);">*</span></span>
+    <span class="q-text">"Have you ever calculated your portfolio-level IRR — meaning the return across all properties combined, not individual deal returns?"</span>
+    <div class="radio-group">
+      <label class="radio-opt" onclick="selectRadio(this,'portfolioIRR','yes')">
+        <input type="radio" name="portfolioIRR" value="yes"><div class="dot"></div>Yes — it is approximately
+        <input type="text" class="radio-open" placeholder="e.g. 9.2%">
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'portfolioIRR','individual')">
+        <input type="radio" name="portfolioIRR" value="individual"><div class="dot"></div>No — I only know individual deal returns
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'portfolioIRR','unsure')">
+        <input type="radio" name="portfolioIRR" value="unsure"><div class="dot"></div>I am not sure what portfolio-level IRR means
+      </label>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Q02 -->
+  <div class="field-group">
+    <span class="q-label">Question 02 · Correlation between properties <span style="color:var(--gold);">*</span></span>
+    <span class="q-text">"Have you calculated the correlation between your properties — meaning do they tend to go up and down together or independently of each other?"</span>
+    <div class="radio-group">
+      <label class="radio-opt" onclick="selectRadio(this,'correlation','independent')">
+        <input type="radio" name="correlation" value="independent"><div class="dot"></div>Yes — they are mostly independent of each other
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'correlation','together')">
+        <input type="radio" name="correlation" value="together"><div class="dot"></div>Yes — they tend to move together
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'correlation','never')">
+        <input type="radio" name="correlation" value="never"><div class="dot"></div>I have never measured this
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'correlation','notsure')">
+        <input type="radio" name="correlation" value="notsure"><div class="dot"></div>I am not sure what correlation means in this context
+      </label>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Q03 -->
+  <div class="field-group">
+    <span class="q-label">Question 03 · Sharpe ratio <span style="color:var(--gold);">*</span></span>
+    <span class="q-text">"Have you calculated the Sharpe ratio of your real estate portfolio — your return per unit of risk?"</span>
+    <div class="radio-group">
+      <label class="radio-opt" onclick="selectRadio(this,'sharpe','yes')">
+        <input type="radio" name="sharpe" value="yes"><div class="dot"></div>Yes — it is approximately
+        <input type="text" class="radio-open" placeholder="e.g. 0.82">
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'sharpe','no')">
+        <input type="radio" name="sharpe" value="no"><div class="dot"></div>No — I have not calculated this
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'sharpe','notsure')">
+        <input type="radio" name="sharpe" value="notsure"><div class="dot"></div>I am not sure what the Sharpe ratio is
+      </label>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Q04 -->
+  <div class="field-group">
+    <span class="q-label">Question 04 · Interest rate sensitivity <span style="color:var(--gold);">*</span></span>
+    <span class="q-text">"If interest rates rose 300 basis points tomorrow, what happens to your debt service coverage across every property?"</span>
+    <div class="radio-group">
+      <label class="radio-opt" onclick="selectRadio(this,'rateRisk','modeled')">
+        <input type="radio" name="rateRisk" value="modeled"><div class="dot"></div>I have modeled this — all properties remain above 1.0 DSCR
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'rateRisk','some')">
+        <input type="radio" name="rateRisk" value="some"><div class="dot"></div>I have modeled this — some properties would drop below 1.0 DSCR
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'rateRisk','thought')">
+        <input type="radio" name="rateRisk" value="thought"><div class="dot"></div>I have thought about it but not formally modeled it
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'rateRisk','no')">
+        <input type="radio" name="rateRisk" value="no"><div class="dot"></div>I have not analyzed this scenario
+      </label>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Q05 -->
+  <div class="field-group">
+    <span class="q-label">Question 05 · Tenant profile <span style="color:var(--gold);">*</span></span>
+    <span class="q-text">"How would you describe the tenant profile across your properties — are they similar types of people or quite different?"</span>
+    <div class="radio-group">
+      <label class="radio-opt" onclick="selectRadio(this,'tenantCorr','similar')">
+        <input type="radio" name="tenantCorr" value="similar"><div class="dot"></div>Very similar — same income level and lifestyle across all properties
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'tenantCorr','somewhat')">
+        <input type="radio" name="tenantCorr" value="somewhat"><div class="dot"></div>Somewhat similar across most properties
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'tenantCorr','different')">
+        <input type="radio" name="tenantCorr" value="different"><div class="dot"></div>Quite different tenant profiles across properties
+      </label>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Q06 -->
+  <div class="field-group">
+    <span class="q-label">Question 06 · Current vacancy rate <span style="color:var(--gold);">*</span></span>
+    <span class="q-text">"What is your current average vacancy rate across your entire portfolio?"</span>
+    <input type="text" id="vacancyRate" placeholder="e.g. 5%  or  1 out of 8 units currently vacant">
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Q07 -->
+  <div class="field-group">
+    <span class="q-label">Question 07 · Monte Carlo simulation <span style="color:var(--gold);">*</span></span>
+    <span class="q-text">"Have you ever run a Monte Carlo simulation on your portfolio — modeling thousands of possible return scenarios to understand your true risk range?"</span>
+    <div class="radio-group">
+      <label class="radio-opt" onclick="selectRadio(this,'monteCarlo','yes')">
+        <input type="radio" name="monteCarlo" value="yes"><div class="dot"></div>Yes — I have done this formally
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'monteCarlo','no')">
+        <input type="radio" name="monteCarlo" value="no"><div class="dot"></div>No — I have not done this
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'monteCarlo','notsure')">
+        <input type="radio" name="monteCarlo" value="notsure"><div class="dot"></div>I am not sure what a Monte Carlo simulation is
+      </label>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Q08 -->
+  <div class="field-group">
+    <span class="q-label">Question 08 · Efficient frontier <span style="color:var(--gold);">*</span></span>
+    <span class="q-text">"Do you know where your portfolio sits on the efficient frontier — the curve showing the maximum possible return for each level of risk?"</span>
+    <div class="radio-group">
+      <label class="radio-opt" onclick="selectRadio(this,'frontier','yes')">
+        <input type="radio" name="frontier" value="yes"><div class="dot"></div>Yes — I have mapped this
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'frontier','no')">
+        <input type="radio" name="frontier" value="no"><div class="dot"></div>No — I have not done this
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'frontier','notsure')">
+        <input type="radio" name="frontier" value="notsure"><div class="dot"></div>I am not sure what the efficient frontier means
+      </label>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Q09 -->
+  <div class="field-group">
+    <span class="q-label">Question 09 · Recession stress test <span style="color:var(--gold);">*</span></span>
+    <span class="q-text">"Have you stress tested your portfolio against a scenario where vacancy rises 15% and interest rates spike 200 basis points at the same time?"</span>
+    <div class="radio-group">
+      <label class="radio-opt" onclick="selectRadio(this,'recessionTest','yes')">
+        <input type="radio" name="recessionTest" value="yes"><div class="dot"></div>Yes — formally with actual numbers
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'recessionTest','loosely')">
+        <input type="radio" name="recessionTest" value="loosely"><div class="dot"></div>I have thought about it loosely
+      </label>
+      <label class="radio-opt" onclick="selectRadio(this,'recessionTest','no')">
+        <input type="radio" name="recessionTest" value="no"><div class="dot"></div>No — I have not done this
+      </label>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Q10 -->
+  <div class="field-group">
+    <span class="q-label">Question 10 · Geographic concentration <span style="color:var(--gold);">*</span></span>
+    <span class="q-text">"What percentage of your total portfolio value is concentrated in your single largest market?"</span>
+    <input type="text" id="geoConcentration" placeholder="e.g. About 60% in Dallas, TX">
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Q11 — Slider -->
+  <div class="field-group">
+    <span class="q-label">Question 11 · Self-assessed diversification <span style="color:var(--gold);">*</span></span>
+    <span class="q-text">"On a scale of 1 to 10, how confident are you that your portfolio is genuinely diversified — not just spread across multiple properties, but mathematically independent in how the properties perform?"</span>
+    <div style="background:var(--warm);padding:1.5rem;margin-top:0.5rem;">
+      <div class="rating-display">
+        <div class="rating-num" id="ratingVal">5</div>
+        <div class="rating-desc-text" id="ratingDesc">Somewhat confident</div>
+      </div>
+      <input type="range" id="diversityRating" min="1" max="10" value="5" oninput="updateRating(this.value)">
+      <div class="rating-labels">
+        <span>1 — Not confident at all</span>
+        <span>10 — Completely confident</span>
+      </div>
+    </div>
+    <div style="margin-top:1rem;">
+      <label class="field-label">Why that rating?</label>
+      <textarea id="ratingWhy" rows="3" placeholder="Be as specific as possible — this shapes how the correlation analysis is framed on the call"></textarea>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Q12 — Most Important -->
+  <div class="field-group">
+    <span class="q-label">Question 12 · Your single biggest concern <span style="color:var(--gold);">*</span></span>
+    <div class="info-box" style="margin-bottom:1rem;">
+      <p><strong>This is the most important question in this form.</strong> Your answer directly shapes how the diagnostic call opens. The specific concern you name becomes the lens through which everything the math reveals is framed.</p>
+    </div>
+    <span class="q-text">"What is the single biggest concern, question, or problem you have about your current real estate portfolio right now?"</span>
+    <textarea id="biggestConcern" rows="6" placeholder="Be as specific as possible — minimum 3 sentences. For example: I worry that all my properties are in similar markets and a downturn would hit everything at once. I also have a variable rate loan expiring next year and I am not sure how much of a risk that actually is. My gut says I should sell one property but I have no mathematical basis for that feeling."></textarea>
+    <div class="field-hint">Minimum 3 sentences. The more specific the answer the more targeted the diagnosis.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Optional upload -->
+  <div class="field-group">
+    <label class="field-label">Optional — Upload existing portfolio files</label>
+    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+      <div class="upload-icon">↑</div>
+      <div class="upload-label">Click to upload files</div>
+      <div class="upload-sub">PDF, Excel, or CSV accepted · Existing spreadsheets or deal analysis files allow models to be run faster and more accurately</div>
+    </div>
+    <input type="file" id="fileInput" style="display:none" multiple accept=".pdf,.xlsx,.xls,.csv" onchange="handleUpload(this)">
+    <div id="fileList" style="margin-top:0.7rem;"></div>
+  </div>
+
+  <div class="form-nav">
+    <button class="btn-back" onclick="prevSection(4)">← Back</button>
+    <div class="step-counter">Step 5 of 5</div>
+    <button class="btn-next" onclick="nextSection(4)">Review &amp; Submit →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SECTION 5 — REVIEW & SUBMIT                       -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="form-section" id="section-5">
+  <div class="section-header">
+    <div class="section-part">Final Step</div>
+    <h2 class="section-title">Review &amp; Submit</h2>
+    <p class="section-desc">Please review your key information below before submitting. Once submitted, Rollie Khay begins analyzing your portfolio within 24 hours.</p>
+  </div>
+
+  <div class="warn-box">
+    <p><strong>Important:</strong> Once you submit this form preparation work on your portfolio begins immediately. Per the Viregenix LLC Terms &amp; Conditions all payments are non-refundable after submission. Please ensure your information is accurate.</p>
+  </div>
+
+  <div style="border:1px solid var(--rule);padding:2rem;background:var(--white);margin-bottom:2rem;">
+    <div style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;">Summary of Your Responses</div>
+    <div id="summaryContent" style="display:grid;gap:0.8rem;"></div>
+  </div>
+
+  <div class="field-group">
+    <label class="check-opt" onclick="toggleCheck(this)" style="border-color:var(--gold);background:var(--warm);align-items:flex-start;">
+      <input type="checkbox" value="agreed"><div class="box" style="margin-top:0.15em;"></div>
+      <span style="font-size:0.9rem;line-height:1.65;color:var(--stone);">I confirm that the information I have provided is accurate to the best of my knowledge. I have read and agree to the <a href="terms-and-conditions.html" target="_blank" style="color:var(--gold);">Terms &amp; Conditions</a>, <a href="disclaimer.html" target="_blank" style="color:var(--gold);">Disclaimer</a>, and <a href="privacy-policy.html" target="_blank" style="color:var(--gold);">Privacy Policy</a> of Viregenix LLC. I understand that submission of this form initiates preparation work and all payments are non-refundable.</span>
+    </label>
+  </div>
+
+  <div class="form-nav">
+    <button class="btn-back" onclick="prevSection(5)">← Back</button>
+    <div class="step-counter">Final Step</div>
+    <button class="btn-submit" onclick="submitForm()">Submit Intake Form →</button>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="success-screen" id="successScreen">
+  <div class="success-icon">✓</div>
+  <h2>Form Submitted Successfully</h2>
+  <p>Your portfolio diagnostic intake form has been received by Viregenix LLC.</p>
+  <p>Rollie Khay will begin analyzing your portfolio data within 24 hours. You will receive a personalized <strong>Portfolio Diagnostic Document</strong> by email approximately 30 minutes before your scheduled call.</p>
+  <p style="margin-top:1.5rem;font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--stone);">Questions? <a href="mailto:support@viregenix.com" style="color:var(--gold);">support@viregenix.com</a></p>
+</div>
+
+</div><!-- /form-wrap -->
+
+<footer>
+  <div class="fi">
+    <div class="fb">© 2026 Viregenix LLC. All rights reserved. · Rollie Khay · Quantitative Real Estate Advisory</div>
+    <div class="fc">Subject to our Privacy Policy, Terms &amp; Conditions, and Disclaimer · support@viregenix.com</div>
+  </div>
+</footer>
+
+<script>
+// ── STATE ────────────────────────────────────────────────────────────────────
+let currentSection = 0;
+
+// ── PROGRESS ─────────────────────────────────────────────────────────────────
+function updateProgress(s) {
+  document.querySelectorAll('.ps').forEach((el, i) => {
+    el.classList.remove('active','done');
+    if (i === s) el.classList.add('active');
+    else if (i < s) el.classList.add('done');
+  });
+  const pct = s === 5 ? 100 : Math.round((s / 5) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+// ── NAVIGATION ────────────────────────────────────────────────────────────────
+function nextSection(from) {
+  document.getElementById('section-' + from).classList.remove('active');
+  currentSection = from + 1;
+  const next = document.getElementById('section-' + currentSection);
+  next.classList.add('active');
+  updateProgress(currentSection);
+  if (currentSection === 5) buildReview();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function prevSection(from) {
+  document.getElementById('section-' + from).classList.remove('active');
+  currentSection = from - 1;
+  document.getElementById('section-' + currentSection).classList.add('active');
+  updateProgress(currentSection);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── RADIO ─────────────────────────────────────────────────────────────────────
+function selectRadio(el, name, val) {
+  document.querySelectorAll('[name="' + name + '"]').forEach(r => {
+    r.closest('.radio-opt').classList.remove('selected');
+  });
+  el.classList.add('selected');
+  el.querySelector('input[type="radio"]').checked = true;
+}
+
+// ── CHECKBOX ──────────────────────────────────────────────────────────────────
+function toggleCheck(el) {
+  el.classList.toggle('selected');
+  const cb = el.querySelector('input[type="checkbox"]');
+  if (cb) cb.checked = el.classList.contains('selected');
+}
+
+// ── RATING ────────────────────────────────────────────────────────────────────
+const ratingLabels = {
+  1:'Not confident at all', 2:'Very low confidence', 3:'Low confidence',
+  4:'Slightly below average', 5:'Somewhat confident', 6:'Moderately confident',
+  7:'Fairly confident', 8:'Quite confident', 9:'Very confident', 10:'Completely confident'
+};
+function updateRating(v) {
+  document.getElementById('ratingVal').textContent = v;
+  document.getElementById('ratingDesc').textContent = ratingLabels[v] || '';
+}
+
+// ── PROPERTY PANELS ───────────────────────────────────────────────────────────
+function buildPropertyPanels() {
+  const types = ['Single Family Home','Small Multifamily (2–4 units)','Large Multifamily (5+ units)','Commercial','Short Term Rental','Syndication / Passive','Other'];
+  let tabs = '', panels = '';
+
+  for (let i = 0; i < 8; i++) {
+    const n = i + 1;
+    tabs += `<div class="ptab ${i===0?'active':''}" onclick="showProp(${i})">Property ${n}</div>`;
+    panels += `
+    <div class="property-panel ${i===0?'active':''}" id="prop-${i}">
+      <div class="prop-header">
+        <div class="prop-num">Property ${n} of 8</div>
+        <div class="prop-status" id="propStatus-${i}">Not yet filled</div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Nickname or street address</label>
+        <input type="text" id="p${i}_nick" placeholder="e.g. Dallas Duplex or 123 Main St" oninput="markFilled(${i})">
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">City and state</label>
+          <input type="text" id="p${i}_city" placeholder="e.g. Dallas, TX">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Year purchased</label>
+          <input type="number" id="p${i}_year" placeholder="e.g. 2019" min="1950" max="2026">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Property type</label>
+        <div class="prop-type-grid">
+          ${types.map(t => `<div class="ptype" onclick="selectPType(this,${i},'${t}')">${t}</div>`).join('')}
+        </div>
+        <input type="hidden" id="p${i}_type">
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">Current market value</label>
+          <input type="text" id="p${i}_value" placeholder="e.g. $450,000">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Original purchase price</label>
+          <input type="text" id="p${i}_purchase" placeholder="e.g. $320,000">
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">Monthly gross rent</label>
+          <input type="text" id="p${i}_rent" placeholder="e.g. $2,800">
+          <div class="field-hint">Current actual rent collected</div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Monthly operating expenses</label>
+          <input type="text" id="p${i}_opex" placeholder="e.g. $950">
+          <div class="field-hint">Taxes + insurance + maintenance + management. Exclude mortgage.</div>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">Current mortgage balance</label>
+          <input type="text" id="p${i}_mortbal" placeholder="e.g. $280,000">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Monthly mortgage payment</label>
+          <input type="text" id="p${i}_mortpay" placeholder="e.g. $1,620">
+          <div class="field-hint">Principal and interest only</div>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">Interest rate (%)</label>
+          <input type="number" id="p${i}_rate" placeholder="e.g. 6.75" step="0.01" min="0" max="30">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Loan maturity year</label>
+          <input type="number" id="p${i}_matyr" placeholder="e.g. 2032" min="2024" max="2060">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Debt type</label>
+        <div class="debt-toggle">
+          <div class="dtog" id="p${i}_fixed"    onclick="selectDebt(${i},'fixed')">Fixed Rate</div>
+          <div class="dtog" id="p${i}_variable" onclick="selectDebt(${i},'variable')">Variable Rate</div>
+          <div class="dtog" id="p${i}_nodebt"   onclick="selectDebt(${i},'none')">No Mortgage</div>
+        </div>
+        <input type="hidden" id="p${i}_debttype">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Current occupancy</label>
+        <div class="occupancy-grid">
+          <div class="occopt full"    onclick="selectOcc(this,${i},'full')">Fully Occupied</div>
+          <div class="occopt partial" onclick="selectOcc(this,${i},'partial')">Partially Vacant</div>
+          <div class="occopt vacant"  onclick="selectOcc(this,${i},'vacant')">Fully Vacant</div>
+        </div>
+        <input type="hidden" id="p${i}_occ">
+      </div>
+    </div>`;
+  }
+
+  document.getElementById('propTabs').innerHTML = tabs;
+  document.getElementById('propPanels').innerHTML = panels;
+}
+
+function showProp(idx) {
+  document.querySelectorAll('.property-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.ptab').forEach(t => t.classList.remove('active'));
+  document.getElementById('prop-' + idx).classList.add('active');
+  document.querySelectorAll('.ptab')[idx].classList.add('active');
+}
+
+function markFilled(idx) {
+  const v = document.getElementById('p' + idx + '_nick').value.trim();
+  const tab = document.querySelectorAll('.ptab')[idx];
+  const st  = document.getElementById('propStatus-' + idx);
+  if (v) { tab.classList.add('filled'); st.textContent = v; st.classList.add('filled'); }
+  else   { tab.classList.remove('filled'); st.textContent = 'Not yet filled'; st.classList.remove('filled'); }
+}
+
+function selectPType(el, idx, type) {
+  el.closest('.prop-type-grid').querySelectorAll('.ptype').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('p' + idx + '_type').value = type;
+}
+
+function selectDebt(idx, type) {
+  ['fixed','variable','nodebt'].forEach(t => document.getElementById('p' + idx + '_' + t).classList.remove('selected'));
+  const key = type === 'none' ? 'nodebt' : type;
+  document.getElementById('p' + idx + '_' + key).classList.add('selected');
+  document.getElementById('p' + idx + '_debttype').value = type;
+}
+
+function selectOcc(el, idx, val) {
+  el.closest('.occupancy-grid').querySelectorAll('.occopt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('p' + idx + '_occ').value = val;
+}
+
+// ── FILE UPLOAD ───────────────────────────────────────────────────────────────
+function handleUpload(input) {
+  document.getElementById('uploadZone').classList.add('has-file');
+  const files = Array.from(input.files);
+  document.getElementById('fileList').innerHTML = files.map(f =>
+    `<div style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;
+    text-transform:uppercase;color:var(--gold);padding:0.4rem 0;
+    border-bottom:1px solid var(--rule);">✓ ${f.name} (${(f.size/1024).toFixed(0)} KB)</div>`
+  ).join('');
+}
+
+// ── REVIEW SUMMARY ────────────────────────────────────────────────────────────
+function buildReview() {
+  const rows = [
+    ['Name',              document.getElementById('fullName').value || '—'],
+    ['Email',             document.getElementById('email').value || '—'],
+    ['Properties owned',  document.getElementById('propCount').value || '—'],
+    ['Total portfolio value', document.getElementById('totalValue').value || '—'],
+    ['Annual gross income',   document.getElementById('grossIncome').value || '—'],
+    ['Annual operating exp',  document.getElementById('opExpenses').value || '—'],
+    ['Total mortgage balance',document.getElementById('totalDebt').value || '—'],
+    ['Biggest concern',   (document.getElementById('biggestConcern').value || '—').substring(0,140) + '…'],
+  ];
+  document.getElementById('summaryContent').innerHTML = rows.map(([k,v]) => `
+    <div style="display:flex;gap:1rem;padding:0.6rem 0;border-bottom:1px solid var(--rule);">
+      <div style="font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;
+      text-transform:uppercase;color:var(--stone);min-width:160px;flex-shrink:0;">${k}</div>
+      <div style="font-size:0.92rem;color:var(--ink);line-height:1.5;">${v}</div>
+    </div>`).join('');
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────────────────────
+function submitForm() {
+  const consent = document.querySelector('#section-5 .check-opt');
+  if (!consent || !consent.classList.contains('selected')) {
+    alert('Please confirm you have read and agree to the Terms & Conditions, Disclaimer, and Privacy Policy before submitting.');
+    return;
+  }
+  document.getElementById('section-5').classList.remove('active');
+  document.getElementById('successScreen').classList.add('active');
+  document.getElementById('progressFill').style.width = '100%';
+  document.querySelectorAll('.ps').forEach(s => { s.classList.remove('active'); s.classList.add('done'); });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+buildPropertyPanels();
+updateProgress(0);
+updateRating(5);
+</script>
+</body>
+</html>
