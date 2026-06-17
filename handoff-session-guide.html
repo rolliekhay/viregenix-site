@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Handoff Session Guide — Viregenix LLC</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:    #0c0c0c;
+  --paper:  #f7f4ee;
+  --warm:   #ede8dc;
+  --gold:   #b8962e;
+  --goldlt: #d4ae4a;
+  --forest: #182820;
+  --stone:  #6a6055;
+  --rule:   #ddd7c8;
+  --white:  #fdfcf9;
+  --red:    #8b3030;
+  --green:  #2e6040;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: #1a1a1a;
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  color: var(--ink);
+  line-height: 1.65;
+}
+
+/* ── CONTROLS ── */
+.controls {
+  max-width: 1000px; margin: 0 auto;
+  padding: 1.2rem 1.5rem;
+  display: flex; align-items: center;
+  justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;
+}
+.ctrl-title {
+  font-family: 'DM Mono', monospace; font-size: 0.6rem;
+  letter-spacing: 0.18em; text-transform: uppercase; color: #888;
+}
+.ctrl-nav { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.ctrl-btn {
+  font-family: 'DM Mono', monospace; font-size: 0.56rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  background: transparent; border: 1px solid #333;
+  color: #666; padding: 0.45rem 0.9rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.ctrl-btn:hover { border-color: var(--gold); color: var(--gold); }
+.ctrl-btn.active { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+.timer-display {
+  font-family: 'DM Mono', monospace; font-size: 1rem;
+  letter-spacing: 0.1em; color: var(--goldlt);
+  background: #111; padding: 0.4rem 1rem;
+  border: 1px solid #333;
+}
+.timer-controls { display: flex; gap: 0.4rem; }
+.timer-btn {
+  font-family: 'DM Mono', monospace; font-size: 0.54rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  background: transparent; border: 1px solid #333;
+  color: #666; padding: 0.4rem 0.8rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.timer-btn:hover { border-color: #fff; color: #fff; }
+
+/* ── SHELL ── */
+.shell { max-width: 1000px; margin: 0 auto; padding: 0 1.5rem 3rem; }
+
+/* ── SECTIONS ── */
+.section { display: none; animation: fadeUp 0.4s ease both; }
+.section.active { display: block; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── PHASE CARD ── */
+.phase-card {
+  background: var(--white);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  overflow: hidden;
+}
+
+/* Phase header */
+.phase-header {
+  background: var(--forest);
+  padding: 1.4rem 2.2rem;
+  display: flex; align-items: center;
+  justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;
+}
+.phase-left { display: flex; align-items: center; gap: 1.2rem; }
+.phase-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem; font-weight: 300;
+  color: rgba(253,252,249,0.2); line-height: 1;
+}
+.phase-info {}
+.phase-label {
+  font-family: 'DM Mono', monospace; font-size: 0.55rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--goldlt); margin-bottom: 0.2rem;
+}
+.phase-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem; font-weight: 400; color: var(--white);
+}
+.phase-time {
+  font-family: 'DM Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  background: rgba(184,150,46,0.2);
+  border: 1px solid rgba(184,150,46,0.35);
+  color: var(--goldlt); padding: 0.4rem 1rem;
+  white-space: nowrap;
+}
+
+/* Phase body */
+.phase-body { padding: 2rem 2.2rem; }
+
+/* Objective box */
+.objective {
+  background: var(--warm);
+  border-left: 3px solid var(--gold);
+  padding: 1rem 1.3rem; margin-bottom: 1.8rem;
+}
+.objective-label {
+  font-family: 'DM Mono', monospace; font-size: 0.52rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.3rem;
+}
+.objective-text {
+  font-size: 0.95rem; color: var(--ink); line-height: 1.65;
+}
+
+/* Steps */
+.steps { display: flex; flex-direction: column; gap: 0; }
+.step {
+  display: flex; gap: 0; border: 1px solid var(--rule);
+  border-top: none; background: var(--white);
+  transition: background 0.2s;
+}
+.step:first-child { border-top: 1px solid var(--rule); }
+.step:hover { background: var(--warm); }
+.step.done { background: #f0f7f2; }
+.step.done .step-text { color: var(--stone); text-decoration: line-through; opacity: 0.6; }
+
+.step-check {
+  width: 48px; min-width: 48px;
+  display: flex; align-items: flex-start;
+  justify-content: center; padding-top: 1.1rem;
+  cursor: pointer;
+}
+.check-box {
+  width: 18px; height: 18px;
+  border: 1.5px solid var(--rule);
+  display: flex; align-items: center;
+  justify-content: center; transition: all 0.2s;
+  flex-shrink: 0;
+}
+.step.done .check-box {
+  background: var(--green);
+  border-color: var(--green);
+}
+.step.done .check-box::after {
+  content: '✓'; color: var(--white);
+  font-size: 0.7rem; line-height: 1;
+}
+
+.step-content { flex: 1; padding: 0.9rem 1.2rem 0.9rem 0; }
+.step-tag {
+  font-family: 'DM Mono', monospace; font-size: 0.5rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+.step-tag.say  { color: var(--forest); }
+.step-tag.do   { color: var(--gold); }
+.step-tag.ask  { color: #7a3a8b; }
+.step-tag.note { color: var(--red); }
+.step-text {
+  font-size: 0.92rem; color: var(--ink); line-height: 1.6;
+}
+
+/* Script box */
+.script-box {
+  background: #f0f4f0;
+  border: 1px solid #c8d8c8;
+  padding: 0.8rem 1.1rem; margin-top: 0.5rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-size: 0.97rem;
+  color: var(--forest); line-height: 1.6;
+}
+
+/* Key numbers row */
+.key-numbers {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.8rem; margin: 1.5rem 0;
+}
+.kn-cell {
+  border: 1px solid var(--rule); padding: 0.9rem 1rem;
+  background: var(--white); text-align: center;
+}
+.kn-label {
+  font-family: 'DM Mono', monospace; font-size: 0.5rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--stone); margin-bottom: 0.3rem;
+}
+.kn-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem; font-weight: 500; color: var(--forest);
+  cursor: text; outline: none; display: block;
+  border-bottom: 1px dashed transparent;
+  transition: border-color 0.2s;
+}
+.kn-val:focus { border-bottom-color: var(--gold); }
+
+/* Warning box */
+.warn-box {
+  background: #fdf2f0; border-left: 3px solid var(--red);
+  padding: 0.9rem 1.2rem; margin: 1rem 0;
+}
+.warn-text { font-size: 0.88rem; color: var(--red); line-height: 1.6; }
+.warn-label {
+  font-family: 'DM Mono', monospace; font-size: 0.5rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--red); margin-bottom: 0.2rem;
+}
+
+/* Divider */
+.divider { height: 1px; background: var(--rule); margin: 1.5rem 0; }
+
+/* Progress bar */
+.progress-bar-wrap {
+  height: 3px; background: rgba(255,255,255,0.08);
+  margin-bottom: 1rem;
+}
+.progress-bar-fill {
+  height: 100%; background: var(--gold);
+  transition: width 0.3s ease;
+}
+
+/* Page nav */
+.page-nav {
+  display: flex; justify-content: space-between;
+  align-items: center; margin-top: 1.2rem;
+  padding-top: 1rem; border-top: 1px solid #2a2a2a;
+}
+.nav-btn {
+  font-family: 'DM Mono', monospace; font-size: 0.6rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  background: transparent; border: 1px solid #333;
+  color: #666; padding: 0.6rem 1.2rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.nav-btn:hover { border-color: var(--gold); color: var(--gold); }
+.nav-btn:disabled { opacity: 0.3; cursor: default; }
+.page-count {
+  font-family: 'DM Mono', monospace; font-size: 0.56rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: #555;
+}
+
+/* Notes field */
+.notes-wrap { margin-top: 1.5rem; }
+.notes-label {
+  font-family: 'DM Mono', monospace; font-size: 0.54rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--stone); margin-bottom: 0.4rem; display: block;
+}
+.notes-field {
+  width: 100%; background: var(--warm);
+  border: 1px solid var(--rule); border-top: none;
+  padding: 0.8rem 1rem; font-family: 'Jost', sans-serif;
+  font-size: 0.88rem; color: var(--ink); resize: vertical;
+  min-height: 70px; outline: none;
+}
+.notes-field:focus { border-color: var(--gold); }
+
+/* Success box */
+.success-box {
+  background: #f0f7f2; border-left: 3px solid var(--green);
+  padding: 0.9rem 1.2rem; margin: 1rem 0;
+}
+.success-label {
+  font-family: 'DM Mono', monospace; font-size: 0.5rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 0.2rem;
+}
+.success-text { font-size: 0.88rem; color: var(--green); line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<!-- ── CONTROLS ── -->
+<div class="controls">
+  <div class="ctrl-title">Viregenix LLC · Handoff Session Guide · 1 Hour</div>
+  <div class="ctrl-nav">
+    <button class="ctrl-btn active" id="btn0" onclick="goSection(0)">1 · Open</button>
+    <button class="ctrl-btn" id="btn1" onclick="goSection(1)">2 · Dashboard</button>
+    <button class="ctrl-btn" id="btn2" onclick="goSection(2)">3 · Monte Carlo</button>
+    <button class="ctrl-btn" id="btn3" onclick="goSection(3)">4 · Framework</button>
+    <button class="ctrl-btn" id="btn4" onclick="goSection(4)">5 · Close</button>
+  </div>
+  <div style="display:flex;gap:0.8rem;align-items:center;">
+    <div class="timer-display" id="timerDisplay">60:00</div>
+    <div class="timer-controls">
+      <button class="timer-btn" onclick="startTimer()">Start</button>
+      <button class="timer-btn" onclick="pauseTimer()">Pause</button>
+      <button class="timer-btn" onclick="resetTimer()">Reset</button>
+    </div>
+  </div>
+</div>
+
+<div class="shell">
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progressFill" style="width:20%"></div>
+  </div>
+
+<!-- ══════════════════════════════════
+     SECTION 1 — OPENING
+══════════════════════════════════ -->
+<div class="section active" id="sec0">
+  <div class="phase-card">
+    <div class="phase-header">
+      <div class="phase-left">
+        <div class="phase-num">01</div>
+        <div class="phase-info">
+          <div class="phase-label">Handoff Session · Phase 1</div>
+          <div class="phase-title">Opening — Confirm Files & Set Expectations</div>
+        </div>
+      </div>
+      <div class="phase-time">Minutes 0 – 5</div>
+    </div>
+    <div class="phase-body">
+
+      <div class="objective">
+        <div class="objective-label">Objective</div>
+        <div class="objective-text">Welcome the client, confirm all three files are open and accessible on their device, and set clear expectations for the session. By the end of this call they will be operating every tool independently — make that the frame from the first minute.</div>
+      </div>
+
+      <div style="font-family:'DM Mono',monospace;font-size:0.54rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--stone);margin-bottom:0.6rem;">Client Quick Reference — fill in before the session</div>
+      <div class="key-numbers">
+        <div class="kn-cell">
+          <div class="kn-label">Client Name</div>
+          <span class="kn-val" contenteditable="true">—</span>
+        </div>
+        <div class="kn-cell">
+          <div class="kn-label">Dashboard File</div>
+          <span class="kn-val" contenteditable="true">Excel / Sheets</span>
+        </div>
+        <div class="kn-cell">
+          <div class="kn-label">Monte Carlo File</div>
+          <span class="kn-val" contenteditable="true">Python / .py</span>
+        </div>
+        <div class="kn-cell">
+          <div class="kn-label">Framework Doc</div>
+          <span class="kn-val" contenteditable="true">PDF / Word</span>
+        </div>
+        <div class="kn-cell">
+          <div class="kn-label">Portfolio Value</div>
+          <span class="kn-val" contenteditable="true">$—</span>
+        </div>
+        <div class="kn-cell">
+          <div class="kn-label">Properties</div>
+          <span class="kn-val" contenteditable="true">—</span>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag say">Say</div>
+            <div class="step-text">Welcome the client by name. Confirm audio and video are clear on both ends.</div>
+            <div class="script-box">"Good [morning / afternoon], [First Name]. Welcome to your Handoff Session. Can you hear me clearly? Perfect."</div>
+          </div>
+        </div>
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag do">Do</div>
+            <div class="step-text">Confirm all three files are open on their device before you start the timer. Do not move to Phase 2 until all three are confirmed. This prevents wasted time mid-session.</div>
+            <div class="script-box">"Before we begin — I need you to have three files open on your device right now. First, your monitoring dashboard file. Second, your Monte Carlo Python model file. Third, your decision framework document. Do you have all three open? Good."</div>
+          </div>
+        </div>
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag say">Say</div>
+            <div class="step-text">Set the frame for the full session — this is a doing session, not a watching session. The client operates every tool themselves with you guiding.</div>
+            <div class="script-box">"Here is how this session works. We have 60 minutes and three tools to cover. I will not just show you how each tool works — you are going to run each one yourself while I guide you. By the end of this call you will have operated all three independently at least once. That is the goal. Let us start with the monitoring dashboard."</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="warn-box">
+        <div class="warn-label">Before you proceed</div>
+        <div class="warn-text">If any file is missing or not accessible, stop here and help them locate it before moving to Phase 2. Do not proceed without all three files confirmed open.</div>
+      </div>
+
+      <div class="notes-wrap">
+        <span class="notes-label">Notes from opening</span>
+        <textarea class="notes-field" placeholder="File access issues, client energy, anything to note before diving in..."></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="page-nav">
+    <button class="nav-btn" disabled>← Previous</button>
+    <span class="page-count">Phase 1 of 5</span>
+    <button class="nav-btn" onclick="goSection(1)">Next →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SECTION 2 — MONITORING DASHBOARD
+══════════════════════════════════ -->
+<div class="section" id="sec1">
+  <div class="phase-card">
+    <div class="phase-header">
+      <div class="phase-left">
+        <div class="phase-num">02</div>
+        <div class="phase-info">
+          <div class="phase-label">Handoff Session · Phase 2</div>
+          <div class="phase-title">Monitoring Dashboard</div>
+        </div>
+      </div>
+      <div class="phase-time">Minutes 5 – 25</div>
+    </div>
+    <div class="phase-body">
+
+      <div class="objective">
+        <div class="objective-label">Objective</div>
+        <div class="objective-text">Walk the client through their custom monitoring dashboard and have them update it live during the session. By the end of this phase they will have successfully completed one full monthly update with you present — so they can do it alone next month without hesitation.</div>
+      </div>
+
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag do">Do</div>
+            <div class="step-text">Share your screen and open the dashboard file. Orient the client to the layout — tabs, sections, and what each metric tracks — before asking them to do anything.</div>
+            <div class="script-box">"I am sharing my screen now so you can see the structure of the dashboard. There are [X] tabs. The first tab is your monthly portfolio snapshot. The second tracks your Sharpe ratio over time. The third shows your geographic and property type allocation percentages. The fourth is your debt maturity schedule. Walk through your own copy as I explain each one."</div>
+          </div>
+        </div>
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag do">Do</div>
+            <div class="step-text">Walk through each metric on the dashboard one at a time. For each one — state what it measures, where the data comes from, and how often it needs to be updated.</div>
+            <div class="script-box">"Portfolio Sharpe ratio — updated monthly, pulled from the returns tab. Geographic concentration — updated whenever you buy or sell a property. VaR estimate — updated quarterly. Variance from optimal allocation — this one updates automatically when you enter the other inputs."</div>
+          </div>
+        </div>
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag do">Do</div>
+            <div class="step-text">Stop sharing your screen. Ask the client to update the dashboard live using this month's actual data while you watch and guide. Do not touch their screen — let them drive.</div>
+            <div class="script-box">"Now stop looking at my screen. Go to your own copy of the dashboard. I want you to enter this month's numbers while I watch. Start with the monthly returns tab. Tell me what you see and what you are entering as you go."</div>
+          </div>
+        </div>
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag note">Note</div>
+            <div class="step-text">Stay quiet while they work. Only speak to correct an error or answer a direct question. The goal is for them to complete the update independently — not for you to narrate every step.</div>
+          </div>
+        </div>
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag ask">Ask</div>
+            <div class="step-text">Once the update is complete, confirm their understanding and identify any metrics that need clarification before moving on.</div>
+            <div class="script-box">"You have just completed your first monthly dashboard update. Is there any metric on this page that you are still unclear about — what it means, where the data comes from, or when to update it?"</div>
+          </div>
+        </div>
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag say">Say</div>
+            <div class="step-text">Close the dashboard phase with a clear statement of what they now own independently.</div>
+            <div class="script-box">"Good. You now know how to update this dashboard every month. It takes 20 to 30 minutes once you have your numbers ready. This is how you stay on the optimal path between now and your next formal review. Let us move to the Monte Carlo model."</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="notes-wrap">
+        <span class="notes-label">Notes — dashboard phase</span>
+        <textarea class="notes-field" placeholder="Where did they struggle? Which metrics needed extra explanation? Any data they were missing?"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="page-nav">
+    <button class="nav-btn" onclick="goSection(0)">← Previous</button>
+    <span class="page-count">Phase 2 of 5</span>
+    <button class="nav-btn" onclick="goSection(2)">Next →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SECTION 3 — MONTE CARLO TOOL
+══════════════════════════════════ -->
+<div class="section" id="sec2">
+  <div class="phase-card">
+    <div class="phase-header">
+      <div class="phase-left">
+        <div class="phase-num">03</div>
+        <div class="phase-info">
+          <div class="phase-label">Handoff Session · Phase 3</div>
+          <div class="phase-title">Monte Carlo Model</div>
+        </div>
+      </div>
+      <div class="phase-time">Minutes 25 – 45</div>
+    </div>
+    <div class="phase-body">
+
+      <div class="objective">
+        <div class="objective-label">Objective</div>
+        <div class="objective-text">Have the client run the Monte Carlo model themselves on a hypothetical new property scenario while you guide each input. By the end of this phase they will have run the model independently at least once and understand how to interpret the output — so they can apply it to every real buy, sell, or refi decision going forward.</div>
+      </div>
+
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag do">Do</div>
+            <div class="step-text">Share your screen briefly and show the pre-loaded model file — the inputs section, the simulation engine, and the output charts. Give a 60-second orientation. Then stop sharing.</div>
+            <div class="script-box">"This is the Monte Carlo model pre-loaded with your portfolio data. There are three sections — the inputs panel on the left, the simulation engine in the middle which runs 10,000 scenarios, and the output charts on the right showing the probability distribution of 5-year returns. I am going to stop sharing now and have you open your own copy."</div>
+          </div>
+        </div>
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag do">Do</div>
+            <div class="step-text">Give them a hypothetical new property scenario to run. Use a realistic example — property type, market, expected return, price point. Walk them through entering each input one at a time.</div>
+            <div class="script-box">"We are going to run a hypothetical scenario together. Imagine you are evaluating a $400,000 single-family rental in Atlanta with an expected cash-on-cash return of 6.2%, 30-year fixed rate debt at 7.1%, and you are putting 25% down. Open the inputs panel and enter those numbers as I call them out."</div>
+          </div>
+        </div>
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag do">Do</div>
+            <div class="step-text">Have them run the simulation. Watch them execute it. Do not describe what the output should show before they see it — let them read the results themselves first.</div>
+            <div class="script-box">"Now run the simulation. Tell me what you see in the output — what does the probability distribution look like? What is the median 5-year return? What is the worst-case 5th percentile outcome?"</div>
+          </div>
+        </div>
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag do">Do</div>
+            <div class="step-text">Walk them through comparing the with-property scenario against the without-property baseline. Explain what the difference in Sharpe ratio means for their decision.</div>
+            <div class="script-box">"Now toggle to the comparison view. You can see the current portfolio versus the portfolio with this new property added. The Sharpe ratio goes from [X] to [Y]. The maximum drawdown changes from [A] to [B]. Based purely on the math — does adding this property improve your portfolio or not? What does the model tell you?"</div>
+          </div>
+        </div>
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag note">Note</div>
+            <div class="step-text">The goal is not to teach them Python or statistics — it is to make them comfortable running the model and reading the output confidently. Focus on inputs and interpretation, not mechanics.</div>
+          </div>
+        </div>
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag ask">Ask</div>
+            <div class="step-text">Before closing this phase, confirm they could run it again on their own without guidance.</div>
+            <div class="script-box">"If I sent you a real deal next week and you needed to run this model on your own — would you be able to do it? What part are you least confident about? Let us cover that now before we move on."</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="warn-box">
+        <div class="warn-label">Watch for this</div>
+        <div class="warn-text">Clients often get stuck on the inputs panel and try to skip to the output. Slow them down. Every input matters. An incorrect vacancy rate assumption can flip the model's recommendation entirely.</div>
+      </div>
+
+      <div class="notes-wrap">
+        <span class="notes-label">Notes — Monte Carlo phase</span>
+        <textarea class="notes-field" placeholder="Which inputs confused them? Did the output match their expectations? Any scenarios they want to run on real deals?"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="page-nav">
+    <button class="nav-btn" onclick="goSection(1)">← Previous</button>
+    <span class="page-count">Phase 3 of 5</span>
+    <button class="nav-btn" onclick="goSection(3)">Next →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SECTION 4 — DECISION FRAMEWORK
+══════════════════════════════════ -->
+<div class="section" id="sec3">
+  <div class="phase-card">
+    <div class="phase-header">
+      <div class="phase-left">
+        <div class="phase-num">04</div>
+        <div class="phase-info">
+          <div class="phase-label">Handoff Session · Phase 4</div>
+          <div class="phase-title">Decision Framework</div>
+        </div>
+      </div>
+      <div class="phase-time">Minutes 45 – 55</div>
+    </div>
+    <div class="phase-body">
+
+      <div class="objective">
+        <div class="objective-label">Objective</div>
+        <div class="objective-text">Walk through the decision framework document together and have the client apply it themselves to two hypothetical scenarios — one buy decision and one sell decision. By the end of this phase they know how to use the framework on every real portfolio decision going forward, without needing to call you first.</div>
+      </div>
+
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag do">Do</div>
+            <div class="step-text">Share your screen and walk through the structure of the decision framework document — the decision criteria, the thresholds, and the go / no-go logic. Keep this to 3 minutes maximum before moving to the scenarios.</div>
+            <div class="script-box">"Your decision framework is [X] pages. It has three sections — a buy criteria checklist, a sell criteria checklist, and a refi criteria checklist. Every decision you make goes through the relevant checklist. If the criteria are not met, the answer is no. The framework exists so you are not making decisions based on how a deal feels — you are making them based on whether the numbers meet the threshold. Let me show you how it works in practice."</div>
+          </div>
+        </div>
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag do">Do</div>
+            <div class="step-text">Stop sharing your screen. Present Scenario 1 — a hypothetical buy decision. Read it out loud and have the client apply the buy criteria checklist themselves.</div>
+            <div class="script-box">"Scenario one. A colleague recommends a duplex in Nashville. Asking price $520,000. Expected gross rent $3,800 per month. Vacancy assumption 8%. Management fee 10%. You would finance with 25% down at 7.25% fixed. Open your buy criteria checklist and work through it out loud. Tell me — does this deal pass or fail each criterion?"</div>
+          </div>
+        </div>
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag note">Note</div>
+            <div class="step-text">Let them work through the checklist without helping. Only step in if they miss a criterion entirely or apply it incorrectly. The point is for them to discover the framework's logic themselves.</div>
+          </div>
+        </div>
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag do">Do</div>
+            <div class="step-text">Present Scenario 2 — a hypothetical sell decision. Have the client apply the sell criteria checklist the same way.</div>
+            <div class="script-box">"Scenario two. You have owned Property X for 4 years. Its individual IRR is 5.1%. Its correlation with your other holdings is 0.91. It has had two vacancy periods in the last 18 months totalling 5 months. Its contribution to your portfolio Sharpe ratio is negative 0.08. Open your sell criteria checklist and apply it. Does this property stay or go?"</div>
+          </div>
+        </div>
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag ask">Ask</div>
+            <div class="step-text">After both scenarios, ask a direct question to confirm they can apply the framework independently on real decisions.</div>
+            <div class="script-box">"The next time a broker sends you a deal or you start wondering whether to hold or sell a property — what is the first thing you do? Walk me through the steps."</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="success-box">
+        <div class="success-label">Success signal</div>
+        <div class="success-text">If they can describe the decision process back to you in their own words without looking at the document, they own the framework. That is the outcome this phase is designed to produce.</div>
+      </div>
+
+      <div class="notes-wrap">
+        <span class="notes-label">Notes — decision framework phase</span>
+        <textarea class="notes-field" placeholder="How did they handle the scenarios? Any criteria they found confusing? Any real deals they mentioned wanting to evaluate?"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="page-nav">
+    <button class="nav-btn" onclick="goSection(2)">← Previous</button>
+    <span class="page-count">Phase 4 of 5</span>
+    <button class="nav-btn" onclick="goSection(4)">Next →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SECTION 5 — CLOSE
+══════════════════════════════════ -->
+<div class="section" id="sec4">
+  <div class="phase-card">
+    <div class="phase-header">
+      <div class="phase-left">
+        <div class="phase-num">05</div>
+        <div class="phase-info">
+          <div class="phase-label">Handoff Session · Phase 5</div>
+          <div class="phase-title">Close — Confirm Independence & Next Steps</div>
+        </div>
+      </div>
+      <div class="phase-time">Minutes 55 – 60</div>
+    </div>
+    <div class="phase-body">
+
+      <div class="objective">
+        <div class="objective-label">Objective</div>
+        <div class="objective-text">Close the session with a clear summary of what the client now owns, what they do each month going forward, and how to reach Viregenix if they have questions. End on a strong, confident note — they leave this call knowing they can manage their portfolio as a system independently.</div>
+      </div>
+
+      <div class="steps">
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag say">Say</div>
+            <div class="step-text">Summarize everything the client now owns and can operate independently. Make it concrete and specific — not general.</div>
+            <div class="script-box">"Here is what you now have and what you can do with it. One — your monitoring dashboard. Update it every month. It tells you whether your portfolio is staying on the optimal path. Two — your Monte Carlo model. Run it every time you evaluate a new acquisition or consider an exit. It tells you how any change affects your portfolio-level risk and return before you commit. Three — your decision framework. Apply it to every buy, sell, and refi decision. It removes gut instinct from the process and replaces it with math."</div>
+          </div>
+        </div>
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag say">Say</div>
+            <div class="step-text">Tell them exactly what their monthly routine looks like going forward — simple, specific, and time-bounded.</div>
+            <div class="script-box">"Your monthly routine is this. First week of every month — update the dashboard. Takes 20 to 30 minutes. Any time you are evaluating a deal — run the Monte Carlo model before you make a decision. Any time a broker pitches you a property or you wonder about selling — apply the framework checklist. That is it. Everything else follows from those three habits."</div>
+          </div>
+        </div>
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag say">Say</div>
+            <div class="step-text">Tell them how to reach Viregenix if they have questions — and what kinds of questions are appropriate to send versus handle with the tools.</div>
+            <div class="script-box">"If you have a question about how to use any of the tools, email support@viregenix.com. If the model is producing a result that does not look right, or you encounter a decision the framework does not clearly address — reach out. We will respond within 48 hours."</div>
+          </div>
+        </div>
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag say">Say</div>
+            <div class="step-text">Close the session with a confident final statement. No hedging, no over-qualifying. They are now equipped.</div>
+            <div class="script-box">"You came into this engagement without a rigorous framework for managing your portfolio as a system. You leave with one — and you have run every tool in it at least once today. The work is done. What you do with it from here is entirely in your hands. I am confident you have everything you need."</div>
+          </div>
+        </div>
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-check"><div class="check-box"></div></div>
+          <div class="step-content">
+            <div class="step-tag do">Do</div>
+            <div class="step-text">Send a follow-up email within 24 hours confirming the three files, the monthly routine summary, and the support contact.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="success-box">
+        <div class="success-label">Session complete</div>
+        <div class="success-text">If the client updated the dashboard, ran the Monte Carlo model, and applied the decision framework to both scenarios — the handoff is complete. They are operating independently.</div>
+      </div>
+
+      <div class="notes-wrap">
+        <span class="notes-label">Final session notes</span>
+        <textarea class="notes-field" placeholder="Overall client confidence level, any follow-up items, feedback they shared, referral signals..."></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="page-nav">
+    <button class="nav-btn" onclick="goSection(3)">← Previous</button>
+    <span class="page-count">Phase 5 of 5</span>
+    <button class="nav-btn" disabled>Session Complete ✓</button>
+  </div>
+</div>
+
+</div><!-- end shell -->
+
+<script>
+// ── SECTION NAV ──
+const TOTAL = 5;
+function goSection(i) {
+  document.querySelectorAll('.section').forEach((s, idx) => {
+    s.classList.toggle('active', idx === i);
+  });
+  document.querySelectorAll('.ctrl-btn').forEach((b, idx) => {
+    b.classList.toggle('active', idx === i);
+  });
+  const pct = ((i + 1) / TOTAL) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── CHECKBOXES ──
+function toggleStep(el) {
+  el.classList.toggle('done');
+}
+
+// ── TIMER ──
+let totalSeconds = 60 * 60;
+let remaining = totalSeconds;
+let timerInterval = null;
+let running = false;
+
+function formatTime(s) {
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+}
+
+function updateDisplay() {
+  const el = document.getElementById('timerDisplay');
+  el.textContent = formatTime(remaining);
+  if (remaining <= 300) {
+    el.style.color = '#c0392b';
+  } else if (remaining <= 600) {
+    el.style.color = '#e67e22';
+  } else {
+    el.style.color = 'var(--goldlt)';
+  }
+}
+
+function startTimer() {
+  if (running) return;
+  running = true;
+  timerInterval = setInterval(() => {
+    if (remaining > 0) {
+      remaining--;
+      updateDisplay();
+    } else {
+      clearInterval(timerInterval);
+      running = false;
+    }
+  }, 1000);
+}
+
+function pauseTimer() {
+  clearInterval(timerInterval);
+  running = false;
+}
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  running = false;
+  remaining = totalSeconds;
+  updateDisplay();
+  document.getElementById('timerDisplay').style.color = 'var(--goldlt)';
+}
+</script>
+</body>
+</html>
