@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Complete Your Engagement — Viregenix LLC</title>
+<meta name="description" content="Complete your Portfolio Optimization Review — Viregenix LLC. $10,997. Limited to 2 engagements per week.">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<meta name="theme-color" content="#182820">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Mono:wght@300;400;500&family=Jost:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0c0c0c; --paper:#f7f4ee; --warm:#ede8dc; --gold:#b8962e;
+  --goldlt:#d4ae4a; --goldpl:#f5ecd4; --forest:#182820; --forest2:#243830;
+  --stone:#6a6055; --rule:#ddd7c8; --white:#fdfcf9;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;
+  font-weight:300;line-height:1.65;overflow-x:hidden;min-height:100vh;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:0.02;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;
+  justify-content:space-between;padding:1.1rem 3rem;background:rgba(247,244,238,0.96);
+  backdrop-filter:blur(14px);border-bottom:1px solid var(--rule);}
+.nb{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--stone);}
+.nback{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--stone);text-decoration:none;
+  display:flex;align-items:center;gap:0.5rem;transition:color 0.2s;}
+.nback:hover{color:var(--gold);}
+.nback::before{content:'←';}
+@media(max-width:700px){nav{padding:1rem 1.3rem;}}
+
+/* ── LAYOUT ── */
+.page{padding-top:72px;min-height:100vh;display:grid;
+  grid-template-columns:1fr 420px;max-width:1120px;margin:0 auto;
+  gap:0;align-items:start;}
+@media(max-width:860px){.page{grid-template-columns:1fr;}}
+
+/* ── LEFT — SUMMARY ── */
+.summary{padding:4rem 3.5rem 4rem 2rem;border-right:1px solid var(--rule);}
+@media(max-width:860px){.summary{padding:2.5rem 1.5rem;border-right:none;
+  border-bottom:1px solid var(--rule);}}
+
+.eyebrow{font-family:'DM Mono',monospace;font-size:0.56rem;letter-spacing:0.22em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:1rem;
+  display:flex;align-items:center;gap:0.7rem;}
+.eyebrow::before{content:'';display:block;width:20px;height:1px;background:var(--gold);}
+
+.main-heading{font-family:'Cormorant Garamond',serif;font-size:clamp(1.9rem,3.5vw,3rem);
+  font-weight:300;line-height:1.1;color:var(--ink);margin-bottom:0.6rem;}
+.main-heading em{font-style:italic;color:var(--forest);}
+
+.sub{font-size:0.9rem;color:var(--stone);margin-bottom:2.5rem;max-width:440px;line-height:1.8;}
+
+/* Capacity badge */
+.capacity{display:inline-flex;align-items:center;gap:0.7rem;
+  background:var(--forest);padding:0.6rem 1.1rem;margin-bottom:2.5rem;}
+.cap-dot{width:7px;height:7px;border-radius:50%;background:var(--goldlt);
+  animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+.cap-text{font-family:'DM Mono',monospace;font-size:0.54rem;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--goldlt);}
+
+/* Summary blocks */
+.blocks{display:flex;flex-direction:column;gap:0;}
+
+.block{border:1px solid var(--rule);border-top:none;padding:1.2rem 1.4rem;
+  background:var(--white);display:flex;gap:1.2rem;align-items:flex-start;}
+.block:first-child{border-top:1px solid var(--rule);}
+.block-num{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;
+  color:var(--gold);line-height:1;flex-shrink:0;width:28px;padding-top:0.1rem;}
+.block-content{}
+.block-label{font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--stone);margin-bottom:0.3rem;}
+.block-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:500;
+  color:var(--forest);margin-bottom:0.25rem;}
+.block-desc{font-size:0.85rem;color:var(--stone);line-height:1.6;}
+
+/* Eight sections list */
+.sections-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;
+  border:1px solid var(--rule);margin-top:2rem;}
+.sg-item{padding:0.7rem 1rem;border-bottom:1px solid var(--rule);
+  border-right:1px solid var(--rule);display:flex;align-items:center;gap:0.6rem;}
+.sg-item:nth-child(even){border-right:none;}
+.sg-item:nth-last-child(-n+2){border-bottom:none;}
+.sg-num{font-family:'DM Mono',monospace;font-size:0.52rem;color:var(--goldlt);flex-shrink:0;}
+.sg-name{font-size:0.82rem;color:var(--stone);}
+
+/* Guarantee strip */
+.guarantee{margin-top:2rem;border-left:3px solid var(--gold);
+  background:var(--goldpl);padding:1rem 1.3rem;}
+.g-label{font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:0.25rem;}
+.g-text{font-size:0.85rem;color:var(--forest);line-height:1.65;}
+
+/* Rollie block */
+.rollie{margin-top:2rem;display:flex;gap:1rem;align-items:center;
+  padding:1rem 1.2rem;border:1px solid var(--rule);background:var(--warm);}
+.rollie-name{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:500;color:var(--forest);}
+.rollie-role{font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--stone);margin-top:0.15rem;}
+
+/* ── RIGHT — CHECKOUT PANEL ── */
+.checkout{padding:3rem 2.5rem;position:sticky;top:72px;background:var(--white);
+  border-left:1px solid var(--rule);}
+@media(max-width:860px){.checkout{padding:2rem 1.5rem;position:static;border-left:none;}}
+
+.price-block{border:1px solid var(--rule);padding:1.4rem 1.5rem;
+  background:var(--warm);margin-bottom:1.5rem;}
+.price-label{font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--stone);margin-bottom:0.4rem;}
+.price-number{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:500;
+  color:var(--forest);line-height:1;}
+.price-note{font-size:0.78rem;color:var(--stone);margin-top:0.4rem;line-height:1.5;}
+
+.pay-btn{display:block;width:100%;background:var(--forest);color:var(--white);
+  font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.16em;
+  text-transform:uppercase;padding:1.15rem 1rem;text-align:center;
+  text-decoration:none;border:none;cursor:pointer;
+  transition:background 0.22s,transform 0.1s;margin-bottom:1rem;}
+.pay-btn:hover{background:var(--gold);color:var(--ink);transform:translateY(-1px);}
+
+.pay-methods{display:flex;justify-content:center;align-items:center;gap:0.8rem;
+  margin-bottom:1.5rem;}
+.pay-method{font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--stone);background:var(--warm);
+  padding:0.3rem 0.6rem;border:1px solid var(--rule);}
+
+.divider{height:1px;background:var(--rule);margin:1.4rem 0;}
+
+.checkout-includes{display:flex;flex-direction:column;gap:0;}
+.ci-header{font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--stone);margin-bottom:0.7rem;}
+.ci-item{display:flex;gap:0.7rem;align-items:flex-start;padding:0.6rem 0;
+  border-bottom:1px solid var(--rule);font-size:0.83rem;color:var(--stone);line-height:1.5;}
+.ci-item:last-child{border-bottom:none;}
+.ci-check{color:var(--gold);flex-shrink:0;font-size:0.75rem;padding-top:0.1rem;}
+
+.refund{margin-top:1.4rem;font-size:0.77rem;color:var(--stone);
+  line-height:1.6;border-top:1px solid var(--rule);padding-top:1rem;}
+.refund-label{font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--stone);display:block;margin-bottom:0.3rem;}
+
+.secure{display:flex;align-items:center;justify-content:center;gap:0.5rem;
+  margin-top:1rem;font-family:'DM Mono',monospace;font-size:0.5rem;
+  letter-spacing:0.1em;text-transform:uppercase;color:var(--stone);}
+.secure::before{content:'🔒';font-size:0.7rem;}
+
+/* Footer */
+footer{text-align:center;padding:2.5rem 1.5rem;border-top:1px solid var(--rule);
+  font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--stone);max-width:1120px;margin:0 auto;}
+footer a{color:var(--stone);text-decoration:none;}
+footer a:hover{color:var(--gold);}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nb">Viregenix LLC</div>
+  <a class="nback" href="javascript:history.back()">Back</a>
+</nav>
+
+<div class="page">
+
+  <!-- ══════════════ LEFT — SUMMARY ══════════════ -->
+  <div class="summary">
+
+    <div class="eyebrow">Portfolio Optimization Review</div>
+    <h1 class="main-heading">Your intake form<br><em>has been received.</em></h1>
+    <p class="sub">Complete your payment below to confirm your engagement and secure your place in the schedule. Your analysis begins once payment is confirmed and your intake form has been reviewed. You will receive a confirmation email from Rollie Khay within a few hours of payment.</p>
+
+    <!-- Capacity badge -->
+    <div class="capacity">
+      <span class="cap-dot"></span>
+      <span class="cap-text">Limited to 2 new engagements per calendar week &nbsp;·&nbsp; 2–3 weeks from intake to handoff</span>
+    </div>
+
+    <!-- The four summary blocks -->
+    <div class="blocks">
+
+      <div class="block">
+        <div class="block-num">1</div>
+        <div class="block-content">
+          <div class="block-label">The Engagement</div>
+          <div class="block-title">One review. Eight sections of analysis.<br>A complete system you own.</div>
+          <div class="block-desc">Every section of the analysis is produced from your actual property data — not benchmarks, not estimates pulled from elsewhere. The result is a complete quantitative system calibrated to your specific portfolio.</div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-num">2</div>
+        <div class="block-content">
+          <div class="block-label">What the Deliverable Looks Like</div>
+          <div class="block-title">A professional report.<br>20–30 pages plus supporting models.</div>
+          <div class="block-desc">You receive a full written report, four working Python model files, a monitoring dashboard, a decision framework, and an implementation roadmap — all pre-loaded with your portfolio data and yours to keep permanently.</div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-num">3</div>
+        <div class="block-content">
+          <div class="block-label">Your Process</div>
+          <div class="block-title">A defined engagement.<br>Not an open-ended retainer.</div>
+          <div class="block-desc">The engagement runs 2–3 weeks from intake form submission to handoff session. Every phase has a defined duration and a defined output. You know exactly what happens, when, and what you receive at the end.</div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-num">4</div>
+        <div class="block-content">
+          <div class="block-label">Eight Sections of Analysis</div>
+          <div class="block-title">Every dimension of your portfolio. Quantified.</div>
+          <div class="block-desc">The analysis covers all eight sections below — from the initial diagnostic through to the monitoring system built specifically for your holdings.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 8 sections grid -->
+    <div class="sections-grid">
+      <div class="sg-item"><span class="sg-num">01</span><span class="sg-name">Portfolio Diagnostic</span></div>
+      <div class="sg-item"><span class="sg-num">02</span><span class="sg-name">Return & Risk Measurement</span></div>
+      <div class="sg-item"><span class="sg-num">03</span><span class="sg-name">Correlation Analysis</span></div>
+      <div class="sg-item"><span class="sg-num">04</span><span class="sg-name">Efficient Frontier Construction</span></div>
+      <div class="sg-item"><span class="sg-num">05</span><span class="sg-name">Optimization Recommendations</span></div>
+      <div class="sg-item"><span class="sg-num">06</span><span class="sg-name">Monte Carlo Stress Testing</span></div>
+      <div class="sg-item"><span class="sg-num">07</span><span class="sg-name">Implementation Roadmap</span></div>
+      <div class="sg-item"><span class="sg-num">08</span><span class="sg-name">Monitoring Dashboard & Models</span></div>
+    </div>
+
+    <!-- Guarantee -->
+    <div class="guarantee">
+      <div class="g-label">Refund Policy</div>
+      <div class="g-text">Full refund available if you request it in writing within 5 business days of payment — provided your intake form has not yet been submitted for analysis. Once analysis begins, the engagement fee is non-refundable.</div>
+    </div>
+
+    <!-- Rollie -->
+    <div class="rollie">
+      <div>
+        <div class="rollie-name">Rollie Khay</div>
+        <div class="rollie-role">Quantitative Real Estate Analyst &nbsp;·&nbsp; Viregenix LLC</div>
+      </div>
+    </div>
+
+  </div><!-- /summary -->
+
+  <!-- ══════════════ RIGHT — CHECKOUT ══════════════ -->
+  <div class="checkout">
+
+    <div style="background:var(--forest);padding:0.8rem 1rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:0.7rem;">
+      <span style="width:8px;height:8px;border-radius:50%;background:var(--goldlt);flex-shrink:0;"></span>
+      <span style="font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--goldlt);">Intake form received &nbsp;·&nbsp; Payment required to begin</span>
+    </div>
+
+    <div class="price-block">
+      <div class="price-label">Portfolio Optimization Review</div>
+      <div class="price-number">$10,997</div>
+      <div class="price-note">Single payment &nbsp;·&nbsp; All fees included &nbsp;·&nbsp; No recurring charges</div>
+    </div>
+
+    <a href="YOUR_STRIPE_PAYMENT_LINK_HERE" class="pay-btn">Complete Payment — $10,997 →</a>
+
+    <div class="pay-methods">
+      <span class="pay-method">ACH Bank Transfer</span>
+      <span class="pay-method">Credit Card</span>
+      <span class="pay-method">Wire</span>
+    </div>
+
+    <div style="font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--stone);text-align:center;margin-bottom:1rem;line-height:1.7;">
+      Having trouble? Email <a href="mailto:support@viregenix.com" style="color:var(--gold);">support@viregenix.com</a><br>and Rollie Khay will send a direct payment link.
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="checkout-includes">
+      <div class="ci-header">What is included</div>
+      <div class="ci-item"><span class="ci-check">→</span>20–30 page Portfolio Optimization Report</div>
+      <div class="ci-item"><span class="ci-check">→</span>4 working Python model files</div>
+      <div class="ci-item"><span class="ci-check">→</span>Custom monitoring dashboard</div>
+      <div class="ci-item"><span class="ci-check">→</span>Decision framework document</div>
+      <div class="ci-item"><span class="ci-check">→</span>Implementation roadmap</div>
+      <div class="ci-item"><span class="ci-check">→</span>1-hour Review Call</div>
+      <div class="ci-item"><span class="ci-check">→</span>60-minute Handoff Session</div>
+      <div class="ci-item"><span class="ci-check">→</span>All deliverables yours permanently</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="refund">
+      <span class="refund-label">Refund window</span>
+      Full refund within 5 business days of payment, provided analysis has not begun. Once your intake form enters the analysis queue, the fee is non-refundable.
+    </div>
+
+    <div class="secure">Secured by Stripe</div>
+
+  </div><!-- /checkout -->
+
+</div><!-- /page -->
+
+<footer>
+  <span>© 2026 Viregenix LLC &nbsp;·&nbsp;</span>
+  <a href="privacy-policy.html">Privacy Policy</a>
+  <span> &nbsp;·&nbsp; </span>
+  <a href="terms-and-conditions.html">Terms & Conditions</a>
+  <span> &nbsp;·&nbsp; </span>
+  <a href="disclaimer.html">Disclaimer</a>
+  <span> &nbsp;·&nbsp; support@viregenix.com</span>
+</footer>
+
+</body>
+</html>
