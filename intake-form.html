@@ -1487,6 +1487,7 @@ async function submitForm() {
   if (!email.trim()) {
     alert('Please enter your email address in Part A before submitting.');
     return;
+  const YourLocation = document.getElementById('location').value || '';
   }
 
   const submitBtn = document.querySelector('#section-5 .btn-submit');
