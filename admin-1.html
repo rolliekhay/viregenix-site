@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Intake Responses — Viregenix LLC</title>
+<meta name="theme-color" content="#182820">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.min.js"></script>
+<style>
+:root{--ink:#0c0c0c;--paper:#f7f4ee;--warm:#ede8dc;--gold:#b8962e;--goldlt:#d4ae4a;--goldpl:#f5ecd4;
+  --forest:#182820;--forest2:#243830;--stone:#6a6055;--rule:#ddd7c8;--white:#fdfcf9;--ok:#2e6040;--warn:#9a6b12;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;font-weight:300;line-height:1.6;min-height:100vh;}
+.mono{font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:0.14em;}
+.hidden{display:none !important;}
+
+/* Login */
+.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem;background:var(--forest);}
+.login-card{background:var(--white);width:100%;max-width:400px;padding:2.4rem 2rem;border-top:3px solid var(--gold);}
+.login-brand{font-size:0.58rem;color:var(--gold);margin-bottom:0.8rem;}
+.login-card h1{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:2rem;line-height:1.1;color:var(--forest);margin-bottom:1.6rem;}
+.login-card h1 em{font-style:italic;}
+label.lbl{display:block;font-family:'DM Mono',monospace;font-size:0.54rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--stone);margin:0.9rem 0 0.35rem;}
+input[type=text],input[type=email],input[type=password],input[type=search],select,textarea{width:100%;border:1px solid var(--rule);background:var(--white);
+  font-family:'Jost',sans-serif;font-size:0.95rem;font-weight:300;padding:0.75rem 0.85rem;color:var(--ink);border-radius:0;}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold);}
+textarea{min-height:110px;resize:vertical;}
+.btn{display:inline-block;background:var(--forest);color:var(--white);font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.16em;
+  text-transform:uppercase;padding:0.85rem 1.3rem;border:none;cursor:pointer;transition:background .2s;}
+.btn:hover{background:var(--gold);color:var(--ink);}
+.btn.ghost{background:transparent;color:var(--forest);border:1px solid var(--forest);}
+.btn.ghost:hover{background:var(--forest);color:var(--white);}
+.btn.full{width:100%;margin-top:1.4rem;padding:1rem;}
+.msg{font-size:0.85rem;margin-top:1rem;color:#9a2a2a;min-height:1.2rem;}
+
+/* App */
+header.top{background:var(--forest);color:var(--white);padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;position:sticky;top:0;z-index:20;}
+.top-brand{font-size:0.6rem;color:rgba(253,252,249,0.55);}
+.top-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--white);}
+.top-title em{color:var(--goldlt);}
+.top-actions{display:flex;gap:0.6rem;flex-wrap:wrap;}
+.top-actions .btn{padding:0.6rem 0.9rem;background:transparent;border:1px solid rgba(253,252,249,0.35);color:var(--white);}
+.top-actions .btn:hover{background:var(--gold);color:var(--ink);border-color:var(--gold);}
+main{max-width:1000px;margin:0 auto;padding:1.5rem;}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--rule);background:var(--white);margin-bottom:1.2rem;}
+.stat{padding:1rem 1.1rem;border-right:1px solid var(--rule);}
+.stat:last-child{border-right:none;}
+.stat-l{font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--stone);}
+.stat-v{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:500;color:var(--forest);line-height:1.1;}
+.tools{display:grid;grid-template-columns:1fr 200px;gap:0.7rem;margin-bottom:1rem;}
+@media(max-width:640px){.stats{grid-template-columns:1fr 1fr;}.stat:nth-child(2){border-right:none;}.stat:nth-child(-n+2){border-bottom:1px solid var(--rule);}
+  .tools{grid-template-columns:1fr;}main{padding:1rem;}}
+.list{border:1px solid var(--rule);background:var(--white);}
+.row{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:0.95rem 1.2rem;border-bottom:1px solid var(--rule);cursor:pointer;}
+.row:last-child{border-bottom:none;}
+.row:hover{background:var(--warm);}
+.row-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:500;color:var(--forest);}
+.row-sub{font-size:0.82rem;color:var(--stone);word-break:break-word;}
+.row-right{text-align:right;flex-shrink:0;}
+.row-date{font-family:'DM Mono',monospace;font-size:0.54rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--stone);margin-bottom:0.3rem;}
+.badge{display:inline-block;font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.2rem 0.5rem;border:1px solid var(--rule);color:var(--stone);background:var(--warm);}
+.badge.new{background:var(--forest);color:var(--goldlt);border-color:var(--forest);}
+.badge.paid{background:#e4efe8;color:var(--ok);border-color:#bcd5c4;}
+.badge.unpaid{background:var(--goldpl);color:var(--warn);border-color:#e6d6a4;}
+.empty{padding:2.5rem 1.2rem;text-align:center;color:var(--stone);}
+.count{font-family:'DM Mono',monospace;font-size:0.54rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--stone);margin:0.8rem 0.2rem;}
+
+/* Detail panel */
+.overlay{position:fixed;inset:0;background:rgba(12,12,12,0.45);z-index:40;display:flex;justify-content:flex-end;}
+.panel{background:var(--paper);width:100%;max-width:640px;height:100%;overflow-y:auto;border-left:3px solid var(--gold);}
+.panel-head{background:var(--forest);color:var(--white);padding:1.2rem 1.5rem;position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;gap:1rem;align-items:flex-start;}
+.panel-head h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.6rem;line-height:1.15;}
+.panel-head .sub{font-size:0.82rem;color:rgba(253,252,249,0.7);word-break:break-word;}
+.close{background:none;border:1px solid rgba(253,252,249,0.4);color:var(--white);font-size:1.1rem;width:2.2rem;height:2.2rem;cursor:pointer;flex-shrink:0;}
+.panel-body{padding:1.3rem 1.5rem 3rem;}
+.ctl{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:0.4rem;}
+.sec{margin-top:1.6rem;border:1px solid var(--rule);background:var(--white);}
+.sec-h{background:var(--warm);padding:0.6rem 1rem;font-family:'DM Mono',monospace;font-size:0.54rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--rule);}
+.kv{display:grid;grid-template-columns:42% 58%;border-bottom:1px solid var(--rule);}
+.kv:last-child{border-bottom:none;}
+.k{padding:0.6rem 1rem;font-size:0.82rem;color:var(--stone);border-right:1px solid var(--rule);}
+.v{padding:0.6rem 1rem;font-size:0.92rem;color:var(--ink);word-break:break-word;white-space:pre-wrap;}
+.saved{font-family:'DM Mono',monospace;font-size:0.54rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ok);margin-left:0.8rem;}
+@media(max-width:560px){.ctl{grid-template-columns:1fr;}.kv{grid-template-columns:1fr;}.k{border-right:none;padding-bottom:0;}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<section class="login" id="loginView">
+  <div class="login-card">
+    <div class="login-brand mono">Viregenix LLC</div>
+    <h1>Intake <em>responses</em></h1>
+    <form id="loginForm">
+      <label class="lbl" for="em">Email</label>
+      <input type="email" id="em" autocomplete="username" required>
+      <label class="lbl" for="pw">Password</label>
+      <input type="password" id="pw" autocomplete="current-password" required>
+      <button class="btn full" type="submit">Sign in</button>
+      <div class="msg" id="loginMsg"></div>
+    </form>
+  </div>
+</section>
+
+<!-- APP -->
+<div id="appView" class="hidden">
+  <header class="top">
+    <div>
+      <div class="top-brand mono">Viregenix LLC</div>
+      <div class="top-title">Intake <em>responses</em></div>
+    </div>
+    <div class="top-actions">
+      <button class="btn" id="refreshBtn">Refresh</button>
+      <button class="btn" id="csvBtn">Export CSV</button>
+      <button class="btn" id="logoutBtn">Sign out</button>
+    </div>
+  </header>
+  <main>
+    <div class="stats">
+      <div class="stat"><div class="stat-l">Total</div><div class="stat-v" id="sTotal">0</div></div>
+      <div class="stat"><div class="stat-l">New</div><div class="stat-v" id="sNew">0</div></div>
+      <div class="stat"><div class="stat-l">Paid</div><div class="stat-v" id="sPaid">0</div></div>
+      <div class="stat"><div class="stat-l">Last 7 days</div><div class="stat-v" id="sWeek">0</div></div>
+    </div>
+    <div class="tools">
+      <input type="search" id="search" placeholder="Search name, email, location…">
+      <select id="statusFilter">
+        <option value="">All statuses</option>
+        <option value="new">New</option>
+        <option value="reviewing">Reviewing</option>
+        <option value="in_analysis">In analysis</option>
+        <option value="completed">Completed</option>
+      </select>
+    </div>
+    <div class="count" id="countLine"></div>
+    <div class="list" id="list"></div>
+  </main>
+</div>
+
+<!-- DETAIL -->
+<div class="overlay hidden" id="overlay">
+  <div class="panel">
+    <div class="panel-head">
+      <div><h2 id="dName"></h2><div class="sub" id="dSub"></div></div>
+      <button class="close" id="closeBtn" aria-label="Close">×</button>
+    </div>
+    <div class="panel-body">
+      <div class="ctl">
+        <div><label class="lbl" for="dStatus">Status</label>
+          <select id="dStatus">
+            <option value="new">New</option>
+            <option value="reviewing">Reviewing</option>
+            <option value="in_analysis">In analysis</option>
+            <option value="completed">Completed</option>
+          </select></div>
+        <div><label class="lbl" for="dPaid">Payment</label>
+          <select id="dPaid"><option value="false">Not marked paid</option><option value="true">Paid</option></select></div>
+      </div>
+      <label class="lbl" for="dNotes">Private notes</label>
+      <textarea id="dNotes"></textarea>
+      <div style="margin-top:0.9rem"><button class="btn" id="saveBtn">Save</button><span class="saved hidden" id="savedTag">Saved</span></div>
+      <div id="dSections"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ───────────── CONFIGURE THESE TWO LINES ─────────────
+// Supabase dashboard > Project Settings > API
+const SUPABASE_URL = 'https://toefrwabzsvqfujvjavz.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvZWZyd2FienN2cWZ1anZqYXZ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMzMzg3NDUsImV4cCI6MjEwODkxNDc0NX0.qdtuuRF8OrIuZM1YBxIlumn2OpQ2Kr15XWzBxteCWEc';   // the anon / public key. NEVER the service_role key.
+// ─────────────────────────────────────────────────────
+
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const $ = id => document.getElementById(id);
+const STATUS_LABEL = {new:'New', reviewing:'Reviewing', in_analysis:'In analysis', completed:'Completed'};
+let rows = [];
+let current = null;
+
+function el(tag, cls, text){
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (text !== undefined) n.textContent = text;   // textContent only: client-typed text is never run as HTML
+  return n;
+}
+function fmtDate(iso){
+  const d = new Date(iso);
+  return d.toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'}) + ' · ' +
+         d.toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'});
+}
+
+// ── Auth ──
+$('loginForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  $('loginMsg').textContent = '';
+  const { error } = await sb.auth.signInWithPassword({ email: $('em').value.trim(), password: $('pw').value });
+  if (error) { $('loginMsg').textContent = 'Sign-in failed. Check your email and password.'; return; }
+  start();
+});
+$('logoutBtn').addEventListener('click', async () => { await sb.auth.signOut(); location.reload(); });
+
+async function start(){
+  const { data } = await sb.auth.getSession();
+  if (!data.session) { $('loginView').classList.remove('hidden'); $('appView').classList.add('hidden'); return; }
+  $('loginView').classList.add('hidden'); $('appView').classList.remove('hidden');
+  await load();
+}
+
+// ── Data ──
+async function load(){
+  rows = [];
+  const page = 1000;
+  for (let from = 0; ; from += page) {
+    const { data, error } = await sb.from('intake_submissions').select('*')
+      .order('created_at', { ascending:false }).range(from, from + page - 1);
+    if (error) { $('countLine').textContent = 'Could not load responses: ' + error.message; return; }
+    rows = rows.concat(data);
+    if (data.length < page) break;
+  }
+  render();
+}
+
+function filtered(){
+  const q = $('search').value.trim().toLowerCase();
+  const st = $('statusFilter').value;
+  return rows.filter(r => (!st || r.status === st) &&
+    (!q || [r.full_name, r.email, r.location].join(' ').toLowerCase().includes(q)));
+}
+
+function render(){
+  $('sTotal').textContent = rows.length;
+  $('sNew').textContent = rows.filter(r => r.status === 'new').length;
+  $('sPaid').textContent = rows.filter(r => r.paid).length;
+  const wk = Date.now() - 7*864e5;
+  $('sWeek').textContent = rows.filter(r => new Date(r.created_at).getTime() >= wk).length;
+
+  const list = $('list'); list.textContent = '';
+  const f = filtered();
+  $('countLine').textContent = f.length + ' of ' + rows.length + ' responses';
+  if (!f.length) { list.appendChild(el('div','empty', rows.length ? 'No responses match your search.' : 'No responses yet.')); return; }
+  f.forEach(r => {
+    const row = el('div','row');
+    const left = el('div');
+    left.appendChild(el('div','row-name', r.full_name || '(no name)'));
+    left.appendChild(el('div','row-sub', [r.email, r.location].filter(Boolean).join(' · ')));
+    const right = el('div','row-right');
+    right.appendChild(el('div','row-date', fmtDate(r.created_at)));
+    const b1 = el('span','badge ' + (r.status === 'new' ? 'new' : ''), STATUS_LABEL[r.status] || r.status);
+    const b2 = el('span','badge ' + (r.paid ? 'paid' : 'unpaid'), r.paid ? 'Paid' : 'Unpaid');
+    b2.style.marginLeft = '0.3rem';
+    right.appendChild(b1); right.appendChild(b2);
+    row.appendChild(left); row.appendChild(right);
+    row.addEventListener('click', () => openDetail(r));
+    list.appendChild(row);
+  });
+}
+$('search').addEventListener('input', render);
+$('statusFilter').addEventListener('change', render);
+$('refreshBtn').addEventListener('click', load);
+
+// ── Detail ──
+function groupFields(data){
+  const groups = new Map();
+  const add = (g,k,v) => { if(!groups.has(g)) groups.set(g,[]); groups.get(g).push([k,v]); };
+  for (const [k,v] of Object.entries(data || {})) {
+    const m = k.match(/^(Property \d+) — (.+)$/);
+    if (m) add(m[1], m[2], v);
+    else add('Portfolio & profile', k, v);
+  }
+  return groups;
+}
+function openDetail(r){
+  current = r;
+  $('dName').textContent = r.full_name || '(no name)';
+  $('dSub').textContent = [r.email, r.location, fmtDate(r.created_at)].filter(Boolean).join(' · ');
+  $('dStatus').value = r.status;
+  $('dPaid').value = String(!!r.paid);
+  $('dNotes').value = r.notes || '';
+  $('savedTag').classList.add('hidden');
+  const box = $('dSections'); box.textContent = '';
+  groupFields(r.data).forEach((fields, name) => {
+    const sec = el('div','sec');
+    sec.appendChild(el('div','sec-h', name));
+    fields.forEach(([k,v]) => {
+      const kv = el('div','kv');
+      kv.appendChild(el('div','k',k));
+      kv.appendChild(el('div','v', v === '' ? '—' : v));
+      sec.appendChild(kv);
+    });
+    box.appendChild(sec);
+  });
+  $('overlay').classList.remove('hidden');
+  $('overlay').querySelector('.panel').scrollTop = 0;
+}
+function closeDetail(){ $('overlay').classList.add('hidden'); current = null; }
+$('closeBtn').addEventListener('click', closeDetail);
+$('overlay').addEventListener('click', e => { if (e.target === $('overlay')) closeDetail(); });
+
+$('saveBtn').addEventListener('click', async () => {
+  if (!current) return;
+  const patch = { status: $('dStatus').value, paid: $('dPaid').value === 'true', notes: $('dNotes').value };
+  const { error } = await sb.from('intake_submissions').update(patch).eq('id', current.id);
+  if (error) { alert('Could not save: ' + error.message); return; }
+  Object.assign(current, patch);
+  $('savedTag').classList.remove('hidden');
+  render();
+});
+
+// ── CSV export (all responses, one column per question) ──
+$('csvBtn').addEventListener('click', () => {
+  const keys = [];
+  rows.forEach(r => Object.keys(r.data || {}).forEach(k => { if (!keys.includes(k)) keys.push(k); }));
+  const head = ['Submitted','Status','Paid','Notes', ...keys];
+  const esc = v => {
+    let s = String(v ?? '');
+    if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;          // blocks spreadsheet formula injection
+    return '"' + s.replace(/"/g,'""') + '"';
+  };
+  const lines = [head.map(esc).join(',')];
+  rows.forEach(r => lines.push([r.created_at, r.status, r.paid ? 'Yes':'No', r.notes || '', ...keys.map(k => (r.data||{})[k] ?? '')].map(esc).join(',')));
+  const blob = new Blob(['﻿' + lines.join('\n')], { type:'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'viregenix-intake-responses.csv';
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+});
+
+start();
+</script>
+</body>
+</html>
