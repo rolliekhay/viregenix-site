@@ -5,7 +5,7 @@
 //   SUPABASE_URL                 e.g. https://toefrwabzsvqfujvjavz.supabase.co
 //   SUPABASE_SERVICE_ROLE_KEY    secret key. Add it as type "Secret". Never put it in a web page.
 //   RESEND_API_KEY               OPTIONAL. Only if you want an email alert per submission.
-//   NOTIFY_EMAIL                 OPTIONAL. e.g. support@viregenix.com
+//   NOTIFY_EMAIL                 OPTIONAL. e.g. support@viregenix.com  (several: a@x.com,b@x.com)
 //   NOTIFY_FROM                  OPTIONAL. e.g. "Viregenix Intake <intake@yourdomain.com>"
 
 const json = (obj, status = 200) =>
@@ -86,7 +86,7 @@ export async function onRequestPost({ request, env }) {
         },
         body: JSON.stringify({
           from: env.NOTIFY_FROM || 'Viregenix Intake <onboarding@resend.dev>',
-          to: [env.NOTIFY_EMAIL],
+          to: env.NOTIFY_EMAIL.split(',').map(function (x) { return x.trim(); }).filter(Boolean), // several addresses: separate with commas
           subject: 'New intake form: ' + (row.full_name || row.email),
           text: 'New intake submission from ' + row.full_name + ' (' + row.email + '), ' + row.location + '.\nOpen your admin dashboard to read it.',
         }),
