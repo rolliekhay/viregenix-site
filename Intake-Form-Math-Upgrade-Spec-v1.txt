@@ -1,0 +1,231 @@
+VIREGENIX LLC — INTAKE FORM "MATH UPGRADE" SPEC v1
+Prepared for Rollie Khay. Copy-ready wording for intake-form.html.
+Nothing here is live until it is added to the form. Wording follows the style of your current form (numbered fields, A. B. C. options, "e.g." examples).
+
+========================================================================
+0. CORRECTION TO MY EARLIER REVIEW
+========================================================================
+I said the form had no purchase date and no per-property vacancy. That was wrong. Your Part C already has field 3 "Year purchased" and field 14 "Current occupancy". The web page I read did not show them. Both stay as they are.
+
+========================================================================
+1. THREE RULES SO THE ENGINE IS NOT BROKEN
+========================================================================
+1. The engine inputs do not change.
+   - monthly_opex = the sum of the new expense parts (the form adds them up and saves the result as field 8).
+   - monthly_mortgage_payment = principal and interest only (field 10).
+   So run_client_analysis.py and portfolio_model.py are untouched. The new fields feed the checks, the Monte Carlo ranges and the recommendations only after the methodology is updated (section 6 below).
+2. R = required, O = optional. If an optional field is left blank, the report uses the standard assumption and says so.
+3. The form adds up the totals itself. If the Part B totals differ from the sum of the Part C properties by more than 5%, the client sees a yellow warning before submitting. The warning never blocks submission (see section 7).
+
+========================================================================
+2. PART B — REPLACE THESE TWO FIELDS
+========================================================================
+(All other Part B fields stay as they are.)
+
+REPLACES "Total annual mortgage payments" (was optional; now R)
+  Principal and interest, combined across all properties — per year ($)
+  Add up the principal and interest for every mortgage you have. Do NOT include taxes or insurance paid through escrow.
+  e.g. $96,000
+
+REPLACES "Total annual operating expenses" (R). Enter each amount for the last 12 months. Exclude mortgage payments.
+  B-1. Property taxes, all properties — per year ($)                      R
+  B-2. Insurance, all properties — per year ($)                           R
+  B-3. Maintenance and repairs, all properties — per year ($)             R
+       Use the average of the last 2 years if you can.
+  B-4. Management fees, all properties — per year ($)                     R
+       Enter 0 if you manage everything yourself.
+  B-5. Other operating costs (HOA, utilities you pay, etc.) — per year ($) O
+  Total annual operating expenses: $____  (calculated by the form)
+
+========================================================================
+3. PART C — PER PROPERTY
+========================================================================
+Fields 1–7 and 9–14 stay exactly as they are.
+
+REPLACE FIELD 8 "Monthly operating expenses" WITH:
+  8. Operating costs (exclude mortgage). Enter the last 12 months.
+     8a. Property taxes — per year ($)                                        R
+     8b. Insurance — per year ($)                                             R
+     8c. Maintenance and repairs — per year ($)                               R
+         Average of the last 2 years if you can.
+     8d. Management fee — % of rent collected                                 R
+         Enter 0 if you self-manage.
+     8e. Other operating costs (HOA, utilities you pay, etc.) — per year ($)  O
+     Monthly operating expenses: $____  (calculated by the form)
+     = (8a + 8b + 8c + 8e) ÷ 12  +  (8d % × field 7)
+     This result is saved as field 8 for the engine.
+
+CHANGE TO FIELD 10 HELP TEXT:
+  "Principal and interest only. If your payment includes taxes or insurance paid through escrow, subtract them. They are already counted in field 8."
+
+NEW FIELDS (continue the numbering after field 14):
+
+15. Cash you invested at purchase                                              R
+    Down payment + closing costs + initial repairs ($). Your best estimate.
+    e.g. $85,000
+
+16. Original loan amount ($)                                                   O
+    e.g. $256,000
+
+17. Improvements or major repairs paid for since purchase ($)                  O
+    e.g. $18,000
+
+18. Rent you could charge today if the property were re-let (per month, $)     O
+    e.g. $3,050
+
+19. Average vacancy over the last 12 months (%)                                R
+    Enter 0 if it was never vacant.
+    e.g. 4
+
+20. Lease type                                                                 R
+    A. Month-to-month
+    B. 6–12 month leases
+    C. Multi-year leases (2+ years)
+    D. Nightly or short-term stays
+    E. Commercial lease — triple net
+    F. Commercial lease — gross or modified gross
+    G. Passive investment / not applicable
+
+21. Next lease expiry (month and year)                                         O
+    Skip for nightly stays and passive investments.
+    e.g. 08/2027
+
+22. Rent change over the last 3 years                                          O
+    A. Down more than 5%
+    B. Within 5% either way
+    C. Up 5–15%
+    D. Up more than 15%
+    E. Owned for less than 3 years
+
+23. Loan features (select all that apply)                                      O
+    A. Interest-only period ends within 24 months
+    B. Balloon payment due
+    C. Prepayment penalty applies
+    D. Cross-collateralized with another property
+    E. None of the above
+    If field 13 = Variable Rate, also enter:
+      Next rate reset (month and year): ____
+      Maximum rate (cap), % : ____
+
+24. Would you consider selling this property in the next 24 months?            R
+    A. Yes
+    B. Only at a strong price
+    C. No
+    D. I cannot (legal, tax, family or lender reasons)
+
+25. Main tenant type                                                           O
+    A. Professionals or families
+    B. Students
+    C. Subsidized or voucher tenants
+    D. Corporate or relocation tenants
+    E. Tourists or short-stay guests
+    F. Business tenants
+    G. Mixed
+
+26. Number of units or rentable bedrooms (number)                              O
+    e.g. 2
+
+========================================================================
+4. PART E — ADDED FOLLOW-UPS
+========================================================================
+The tick-box answers for Q01–Q03, Q07 and Q08 stay. They still tell you what the client knows. Each gets numbers underneath that feed the maths. Wording on the form: "Not sure? Skip the numbers below. We will use standard assumptions."
+
+Q01  (keep the three options)
+  Q01a. If you chose "approximately": your portfolio IRR (%)                   O
+  Q01b. Properties you sold in the last 10 years (up to 3 lines)               O
+        For each: year bought · purchase price · year sold · net sale proceeds
+        e.g. 2016 · $210,000 · 2022 · $305,000
+
+Q02  (keep the four options)
+  Q02a. Share of your tenants (by rent) who work for the same employer or industry   O
+        A. None, or under 10%
+        B. 10–25%
+        C. 25–50%
+        D. Over 50%
+  (Per-property rent change, tenant type and cross-collateralized loans are in Part C fields 22, 25 and 23.)
+
+Q03  (keep the three options)
+  Q03a. Actual net cash flow, after all costs and debt payments, for each of the last 3 calendar years ($)
+        Last year      R
+        2 years ago    O
+        3 years ago    O
+        e.g. $41,500
+  Q03b. Your estimate of total return in the last 12 months (cash flow + change in value), %   O
+
+Q07  (keep the three options)
+  Q07a. Highest vacancy any property had in the last 5 years (%)               O
+  Q07b. Typical time to find a new tenant after one leaves                      O
+        A. Under 1 month
+        B. 1–2 months
+        C. 2–4 months
+        D. Over 4 months
+  Q07c. Largest unplanned repair or legal bill in the last 5 years ($)          O
+  Q07d. Your own view of rent growth over the next 3 years                      O
+        A. Falling
+        B. 0–2% a year
+        C. 2–4% a year
+        D. 4–6% a year
+        E. Over 6% a year
+
+Q08  (keep the three options). Add "Your goals and limits":
+  Q08a. Target annual return on your equity (%)                                 R
+  Q08b. Largest one-year drop in portfolio value you could accept without selling   R
+        A. 5%
+        B. 10%
+        C. 20%
+        D. 30% or more
+  Q08c. Investment horizon                                                      R
+        A. Under 3 years
+        B. 3–7 years
+        C. 7–15 years
+        D. Over 15 years
+  Q08d. Cash reserves you hold outside the properties ($)                       R
+  Q08e. Capital you could add in the next 24 months ($)                         O
+  Q08f. Direction you prefer for borrowing                                      R
+        A. Reduce debt
+        B. Keep debt about the same
+        C. Increase debt
+  Q08g. Share of your total net worth in real estate                            O
+        A. Under 25%
+        B. 25–50%
+        C. 50–75%
+        D. Over 75%
+  Q08h. Do you rely on the portfolio's cash flow to live on?                    O
+        A. No
+        B. Partly
+        C. Yes. Monthly amount needed: $____
+
+Q04, Q05, Q06, Q09–Q12 stay as they are.
+
+========================================================================
+5. TIME TO COMPLETE (my estimate; the page states none)
+========================================================================
+                          Required fields only     With the optional fields
+  3 properties            about 50–65 minutes      about 60–80 minutes
+  8 properties            about 1 h 25 – 1 h 50    about 1 h 50 – 2 h 15
+Before: about 30–45 minutes (3 properties) and 50–75 minutes (8 properties).
+Because the form is now longer, add three things:
+  - A note at the top with the time estimate.
+  - A save-and-resume link.
+  - A list of the documents to have ready: mortgage statements, rent roll, last 12 months' income and expenses, property tax and insurance bills.
+
+========================================================================
+6. WHAT TO UPDATE BEFORE THE NEW DATA IS USED
+========================================================================
+  Report Section 2 (Diagnostic): expense breakdown by category and debt service from field 10 and Part B.
+  Section 3 (Return and Risk): IRR from fields 3, 15, 17 and Q01b; cross-check the model's cash flow against Q03a.
+  Section 4 (Correlation): fields 20, 22, 23, 25 and Q02a refine the modelled correlation.
+  Section 7 (Monte Carlo): Q07a–Q07d set the vacancy range, re-let time, repair shocks and rent growth.
+  Sections 5 and 6 (Frontier and Recommendations): Q08a–Q08h and field 24 set what the optimisation is allowed to recommend.
+  run_client_analysis methodology and prompt: add the new fields to the list of fields "collected but not carried into the run file", so the AI does not stop and ask about them.
+  Pre-start intake-check reminder email: add the new fields to the Part A/B/C/E lists.
+  Privacy Policy: you are collecting more financial detail. Check that it covers it.
+
+========================================================================
+7. DECISIONS (SETTLED BY ROLLIE KHAY, 11 NOV 2026)
+========================================================================
+  1. Field 20 (lease type) and field 24 (willing to sell) stay REQUIRED, as marked.
+  2. The form does the monthly conversion for 8a–8e. The client enters annual taxes, insurance, maintenance and other costs, and the management fee as a percentage.
+  3. The 5% mismatch warning ONLY WARNS. It never blocks submission. The client sees the yellow message and can still submit. The warning must not stop the form from being sent.
+     Suggested wording: "Your Part B totals differ from the sum of your properties by more than 5%. Please check them. You can still submit."
+     Your intake check (before work starts) should compare the Part B totals with the Part C sums for every client, because the form will let a mismatch through.
